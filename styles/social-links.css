@@ -1,0 +1,16 @@
+.social-icon-link {
+  @apply inline-flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 transform hover:scale-110;
+}
+
+.social-icon-instagram {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  @apply hover:shadow-lg hover:shadow-pink-500/25;
+}
+
+.social-icon-whatsapp {
+  @apply bg-green-500 hover:bg-green-600 hover:shadow-lg hover:shadow-green-500/25;
+}
+
+.social-icon-link:hover {
+  @apply -translate-y-1;
+}
