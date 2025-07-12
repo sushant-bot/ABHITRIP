@@ -212,249 +212,373 @@ export function TripDetailPage({ trip }: TripDetailPageProps) {
         </div>
       </section>
 
-      {/* Enhanced Main Content */}
-      <div className="container mx-auto px-4 py-12 md:py-16">
-        <div className="grid lg:grid-cols-3 gap-12 md:gap-16">
-          {/* Enhanced Main Content */}
-          <div className="lg:col-span-2 space-y-12">
-            {/* Enhanced Overview */}
-            <Card className="border-0 shadow-2xl hover:shadow-3xl transition-all duration-500 animate-fadeInUp">
-              <CardHeader className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-xl">
-                <CardTitle className="text-2xl md:text-3xl flex items-center gap-3">
-                  <Mountain className="w-8 h-8" />
-                  Trip Overview
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-8 space-y-8">
-                <p className="text-gray-700 leading-relaxed text-lg md:text-xl">{trip.detailedDescription}</p>
-
-                <div className="grid md:grid-cols-3 gap-6">
-                  <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl hover-lift">
-                    <Clock className="w-8 h-8 text-blue-600 mx-auto mb-3" />
-                    <div className="font-bold text-xl text-gray-900">{trip.duration}</div>
-                    <div className="text-gray-600">Duration</div>
-                  </div>
-                  <div className="text-center p-6 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-2xl hover-lift">
-                    <Users className="w-8 h-8 text-emerald-600 mx-auto mb-3" />
-                    <div className="font-bold text-xl text-gray-900">{trip.groupSize}</div>
-                    <div className="text-gray-600">Group Size</div>
-                  </div>
-                  <div className="text-center p-6 bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl hover-lift">
-                    <Badge variant="outline" className="text-amber-600 border-amber-200 text-lg px-4 py-2">
-                      {trip.difficulty}
-                    </Badge>
-                    <div className="text-gray-600 mt-2">Difficulty</div>
-                  </div>
+      {/* Content */}
+      <div className="container mx-auto px-4 py-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Overview */}
+            <section className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-green-500 to-emerald-600 rounded-full mr-3 shadow-md">
+                  <Mountain className="h-5 w-5 text-white" />
                 </div>
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-700 bg-clip-text text-transparent">Overview</h2>
+              </div>
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-lg mb-4 border border-green-100">
+                <p className="text-gray-700 leading-relaxed text-lg">
+                  {trip.detailedDescription}
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3 mt-3">
+                <span className="inline-flex items-center bg-green-100 text-green-800 rounded-full px-3 py-1 text-sm font-medium">
+                  <Mountain className="mr-1 h-3 w-3" />
+                  {trip.difficulty}
+                </span>
+                <span className="inline-flex items-center bg-blue-100 text-blue-800 rounded-full px-3 py-1 text-sm font-medium">
+                  <Clock className="mr-1 h-3 w-3" />
+                  {trip.duration}
+                </span>
+                <span className="inline-flex items-center bg-purple-100 text-purple-800 rounded-full px-3 py-1 text-sm font-medium">
+                  <Users className="mr-1 h-3 w-3" />
+                  {trip.groupSize} people
+                </span>
+                <span className="inline-flex items-center bg-amber-100 text-amber-800 rounded-full px-3 py-1 text-sm font-medium">
+                  <Star className="mr-1 h-3 w-3" />
+                  {trip.rating} ({trip.reviews} reviews)
+                </span>
+              </div>
+            </section>
 
-                <div>
-                  <h3 className="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-3">
-                    <Star className="w-7 h-7 text-yellow-500" />
-                    Key Highlights
-                  </h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {trip.highlights.map((highlight, index) => (
-                      <div
-                        key={index}
-                        className="flex items-start gap-4 p-4 bg-gradient-to-r from-emerald-50 to-blue-50 rounded-xl hover-lift"
-                      >
-                        <CheckCircle className="w-6 h-6 text-emerald-500 mt-1 flex-shrink-0" />
-                        <span className="text-gray-700 font-medium">{highlight}</span>
+            {/* Highlights */}
+            <section className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+              <div className="flex items-center mb-6">
+                <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-teal-500 to-emerald-600 rounded-full mr-3 shadow-md">
+                  <Star className="h-5 w-5 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-emerald-700 bg-clip-text text-transparent">Highlights</h2>
+              </div>
+              <div className="mb-6 bg-green-50 p-4 rounded-lg border border-green-100 transform hover:scale-[1.01] transition-transform duration-300">
+                <p className="text-green-800 font-medium flex items-center">
+                  <Star className="h-5 w-5 mr-2 text-green-600" />
+                  Key attractions and experiences that make this trip special.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {trip.highlights.map((highlight, index) => (
+                  <div key={index} className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-4 hover:shadow-md transition-shadow duration-300 transform hover:translate-y-[-5px] duration-300 border border-emerald-100">
+                    <div className="flex items-start">
+                      <div className="h-8 w-8 flex items-center justify-center bg-gradient-to-br from-green-400 to-emerald-500 rounded-full mr-3 mt-0.5 flex-shrink-0 shadow-sm">
+                        <CheckCircle className="h-4 w-4 text-white" />
                       </div>
-                    ))}
+                      <div>
+                        <span className="font-medium text-emerald-800">{highlight}</span>
+                      </div>
+                    </div>
                   </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Itinerary */}
+            <section className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-purple-500 to-indigo-600 rounded-full mr-3 shadow-md">
+                  <Calendar className="h-5 w-5 text-white" />
                 </div>
-              </CardContent>
-            </Card>
-
-            {/* Enhanced Detailed Tabs */}
-            <Tabs defaultValue="itinerary" className="w-full animate-fadeInUp stagger-2">
-              <TabsList
-                className={`grid w-full ${tabsToShow.length === 3 ? "grid-cols-3" : "grid-cols-4"} h-16 bg-gradient-to-r from-slate-100 to-blue-100 rounded-2xl p-2`}
-              >
-                <TabsTrigger
-                  value="itinerary"
-                  className="text-lg font-semibold rounded-xl data-[state=active]:bg-white data-[state=active]:shadow-lg"
-                >
-                  <Calendar className="w-5 h-5 mr-2" />
-                  Itinerary
-                </TabsTrigger>
-                <TabsTrigger
-                  value="inclusions"
-                  className="text-lg font-semibold rounded-xl data-[state=active]:bg-white data-[state=active]:shadow-lg"
-                >
-                  <Check className="w-5 h-5 mr-2" />
-                  Inclusions
-                </TabsTrigger>
-                <TabsTrigger
-                  value="faq"
-                  className="text-lg font-semibold rounded-xl data-[state=active]:bg-white data-[state=active]:shadow-lg"
-                >
-                  FAQ
-                </TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="itinerary" className="mt-8">
-                <Card className="border-0 shadow-2xl">
-                  <CardHeader className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-t-xl">
-                    <CardTitle className="text-2xl flex items-center gap-3">
-                      <Calendar className="w-7 h-7" />
-                      Detailed Itinerary
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-8">
-                    <div className="space-y-6">
-                      {trip.itinerary.map((item, index) => (
-                        <div
-                          key={index}
-                          className="flex gap-6 pb-6 border-b border-gray-100 last:border-b-0 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 rounded-xl p-4 transition-all duration-300"
-                        >
-                          <div className="flex-shrink-0 w-32">
-                            <Badge
-                              variant="outline"
-                              className="text-sm font-medium px-3 py-2 bg-gradient-to-r from-blue-100 to-purple-100 border-blue-200"
-                            >
-                              {item.time}
-                            </Badge>
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-indigo-700 bg-clip-text text-transparent">Detailed Itinerary</h2>
+              </div>
+              <div className="mb-6 bg-indigo-50 p-4 rounded-lg border border-indigo-100 transform hover:scale-[1.01] transition-transform duration-300">
+                <p className="text-indigo-800 font-medium flex items-center">
+                  <Calendar className="h-5 w-5 mr-2 text-indigo-600" />
+                  Your complete journey breakdown with activities, timings, and locations.
+                </p>
+              </div>
+              
+              <div className="space-y-8">
+                {trip.itinerary.map((item, index) => (
+                  <div key={index} className="relative">
+                    {index < trip.itinerary.length - 1 && (
+                      <div className="absolute top-8 bottom-0 left-6 w-0.5 bg-gradient-to-b from-blue-400 to-indigo-600 ml-0.5"></div>
+                    )}
+                    <div className="flex items-start">
+                      <div className="z-10 flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 shadow-md ring-2 ring-indigo-100 flex-shrink-0">
+                        <span className="text-xs font-bold text-white">{index + 1}</span>
+                      </div>
+                      <div className="ml-4 flex-1">
+                        <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-300 border border-blue-100 transform hover:translate-y-[-2px] transition-transform duration-300">
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                            {item.time && (
+                              <span className="text-indigo-700 font-semibold bg-indigo-50 px-3 py-1 rounded text-sm">{item.time}</span>
+                            )}
+                            {item.title && (
+                              <span className="font-semibold text-gray-800">{item.title}</span>
+                            )}
                           </div>
-                          <div className="flex-1">
-                            <p className="text-gray-700 text-lg leading-relaxed">{item.activity}</p>
-                          </div>
+                          {item.activity && (
+                            <p className="mt-2 text-gray-700">{item.activity}</p>
+                          )}
+                          {item.activities && item.activities.length > 0 && (
+                            <ul className="mt-2 space-y-1">
+                              {item.activities.map((activity, actIndex) => (
+                                <li key={actIndex} className="text-gray-700 flex items-start">
+                                  <span className="w-2 h-2 bg-indigo-400 rounded-full mt-2 mr-2 flex-shrink-0"></span>
+                                  {activity}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                          {item.meals && item.meals.length > 0 && (
+                            <div className="mt-2">
+                              <span className="text-sm font-medium text-emerald-600">Meals: </span>
+                              <span className="text-gray-700">{item.meals.join(", ")}</span>
+                            </div>
+                          )}
                         </div>
-                      ))}
+                      </div>
                     </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-
-              <TabsContent value="inclusions" className="mt-8">
-                <div className="grid md:grid-cols-2 gap-8">
-                  <Card className="border-0 shadow-2xl hover:shadow-3xl transition-all duration-500">
-                    <CardHeader className="bg-gradient-to-r from-emerald-600 to-green-600 text-white rounded-t-xl">
-                      <CardTitle className="text-xl flex items-center gap-3">
-                        <Check className="h-6 w-6" />
-                        What's Included
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-6">
-                      <ul className="space-y-4">
-                        {trip.included.map((item, index) => (
-                          <li key={index} className="flex items-start gap-4 p-3 bg-emerald-50 rounded-xl hover-lift">
-                            <Check className="h-6 w-6 text-emerald-500 mt-0.5 flex-shrink-0" />
-                            <span className="text-gray-700 font-medium">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="border-0 shadow-2xl hover:shadow-3xl transition-all duration-500">
-                    <CardHeader className="bg-gradient-to-r from-red-600 to-pink-600 text-white rounded-t-xl">
-                      <CardTitle className="text-xl flex items-center gap-3">
-                        <X className="h-6 w-6" />
-                        What's Not Included
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-6">
-                      <ul className="space-y-4">
-                        {trip.excluded.map((item, index) => (
-                          <li key={index} className="flex items-start gap-4 p-3 bg-red-50 rounded-xl hover-lift">
-                            <X className="h-6 w-6 text-red-500 mt-0.5 flex-shrink-0" />
-                            <span className="text-gray-700 font-medium">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
+                  </div>
+                ))}
+              </div>
+            </section>
+            
+            {/* Pick Up Points */}
+            <section className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-red-500 to-orange-600 rounded-full mr-3 shadow-md">
+                  <MapPin className="h-5 w-5 text-white" />
                 </div>
-
-                <Card className="mt-8 border-0 shadow-2xl">
-                  <CardHeader className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-t-xl">
-                    <CardTitle className="text-xl">Things to Carry</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-6">
-                    <div className="grid md:grid-cols-2 gap-4">
-                      {trip.thingsToCarry.map((item, index) => (
-                        <div key={index} className="flex items-start gap-4 p-3 bg-blue-50 rounded-xl hover-lift">
-                          <div className="w-3 h-3 bg-blue-500 rounded-full mt-2 flex-shrink-0" />
-                          <span className="text-gray-700 font-medium">{item}</span>
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-red-600 to-orange-700 bg-clip-text text-transparent">Pick Up Points</h2>
+              </div>
+              
+              <div className="mb-6 bg-orange-50 p-4 rounded-lg border border-orange-100 transform hover:scale-[1.01] transition-transform duration-300">
+                <p className="text-orange-800 font-medium flex items-center">
+                  <MapPin className="h-5 w-5 mr-2 text-orange-600" />
+                  Multiple pickup locations in Bangalore for your convenience. Same locations serve as drop points on return.
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {trip.pickupPoints.map((point, index) => {
+                  const location = typeof point === 'string' 
+                    ? (point as string).split(' - ')[0] 
+                    : (point as { location: string; time: string }).location;
+                  const time = typeof point === 'string' 
+                    ? (point as string).split(' - ')[1] 
+                    : (point as { location: string; time: string }).time;
+                  
+                  return (
+                    <div key={index} className="bg-white rounded-lg p-4 shadow-sm border border-orange-100 hover:shadow-md transition-shadow duration-300 hover:border-orange-200 transform hover:translate-y-[-5px] transition-transform duration-300">
+                      <div className="flex items-center">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-orange-100 to-orange-200 text-orange-600 shadow-md">
+                          <MapPin className="h-6 w-6" />
                         </div>
-                      ))}
+                        <div className="ml-4">
+                          <h3 className="font-semibold text-gray-800 mb-1">{location}</h3>
+                          {time && (
+                            <p className="text-orange-600 flex items-center">
+                              <Clock className="h-4 w-4 mr-1" />
+                              {time}
+                            </p>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
+                  );
+                })}
+              </div>
+            </section>
+            
+            {/* Things to Carry */}
+            <section className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-teal-500 to-green-600 rounded-full mr-3 shadow-md">
+                  <Shield className="h-5 w-5 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-green-700 bg-clip-text text-transparent">Things to Carry</h2>
+              </div>
+              
+              <div className="mb-6 bg-teal-50 p-4 rounded-lg border border-teal-100 transform hover:scale-[1.01] transition-transform duration-300">
+                <p className="text-teal-800 font-medium flex items-center">
+                  <Shield className="h-5 w-5 mr-2 text-teal-600" />
+                  Essential items to pack for a comfortable and enjoyable journey.
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                {trip.thingsToCarry.map((item, index) => (
+                  <div key={index} className="bg-gradient-to-br from-teal-50 to-green-50 rounded-lg px-4 py-3 flex items-center hover:shadow-md transition-shadow duration-300 transform hover:translate-y-[-3px] border border-green-100">
+                    <div className="h-8 w-8 flex items-center justify-center bg-gradient-to-br from-teal-400 to-green-500 rounded-full mr-3 flex-shrink-0 shadow-sm">
+                      <CheckCircle className="h-4 w-4 text-white" />
+                    </div>
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
 
-              <TabsContent value="faq" className="mt-8">
-                <Card className="border-0 shadow-2xl">
-                  <CardHeader className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-t-xl">
-                    <CardTitle className="text-2xl">Frequently Asked Questions</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-8">
-                    <Accordion type="single" collapsible className="w-full space-y-4">
-                      {trip.faqs.map((faq, index) => (
-                        <AccordionItem
-                          key={index}
-                          value={`item-${index}`}
-                          className="border border-gray-200 rounded-xl px-6 hover:shadow-lg transition-all duration-300"
-                        >
-                          <AccordionTrigger className="text-left text-lg font-semibold py-6 hover:no-underline">
-                            {faq.question}
-                          </AccordionTrigger>
-                          <AccordionContent className="text-gray-700 pb-6 text-lg leading-relaxed">
-                            {faq.answer}
-                          </AccordionContent>
-                        </AccordionItem>
-                      ))}
-                    </Accordion>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
+            {/* Inclusions & Exclusions */}
+            <section className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full mr-3 shadow-md">
+                  <CheckCircle className="h-5 w-5 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent">Inclusions & Exclusions</h2>
+              </div>
+              
+              <div className="mb-6 bg-emerald-50 p-4 rounded-lg border border-emerald-100 transform hover:scale-[1.01] transition-transform duration-300">
+                <p className="text-emerald-800 font-medium flex items-center">
+                  <CheckCircle className="h-5 w-5 mr-2 text-emerald-600" />
+                  What's included in your package and what you'll need to arrange separately.
+                </p>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* Inclusions */}
+                <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-5 border border-emerald-100 shadow-sm hover:shadow-md transition-shadow duration-300">
+                  <h3 className="font-semibold text-green-800 mb-4 flex items-center text-lg">
+                    <div className="h-8 w-8 flex items-center justify-center bg-gradient-to-br from-green-400 to-emerald-500 rounded-full mr-3 flex-shrink-0 shadow-sm">
+                      <CheckCircle className="h-4 w-4 text-white" />
+                    </div>
+                    Inclusions
+                  </h3>
+                  <ul className="space-y-3 pl-11">
+                    {trip.included.map((item, index) => (
+                      <li key={index} className="flex items-start text-sm bg-white p-2 rounded-lg shadow-sm border border-green-100 transform hover:translate-y-[-2px] transition-transform duration-300">
+                        <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                {/* Exclusions */}
+                <div className="bg-gradient-to-br from-rose-50 via-red-50 to-pink-50 rounded-lg p-6 border border-red-200 shadow-md hover:shadow-lg transition-all duration-300 relative overflow-hidden">
+                  {/* Background pattern */}
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-red-200/20 to-pink-200/30 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
+                  <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-red-200/30 to-pink-200/20 rounded-full blur-xl -ml-6 -mb-6 pointer-events-none"></div>
+                  
+                  <h3 className="font-bold text-red-800 mb-5 flex items-center text-lg relative z-10">
+                    <div className="h-8 w-8 flex items-center justify-center bg-gradient-to-br from-red-500 to-pink-600 rounded-full mr-3 flex-shrink-0 shadow-md ring-2 ring-red-200">
+                      <X className="h-4 w-4 text-white" />
+                    </div>
+                    Exclusions
+                  </h3>
+                  
+                  <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 mb-4 border border-red-100 relative z-10">
+                    <p className="text-gray-700 text-sm italic">The following items are not included in your trip package and may require additional payment or separate arrangements.</p>
+                  </div>
+                  
+                  <ul className="space-y-3 pl-12 relative z-10">
+                    {trip.excluded.map((item, index) => (
+                      <li key={index} className="flex items-start bg-white p-4 rounded-lg shadow-sm border-l-4 border border-red-200 border-l-red-400 transform hover:translate-y-[-2px] transition-all duration-300 hover:shadow-md group">
+                        <X className="h-5 w-5 text-red-500 mr-3 mt-0.5 flex-shrink-0 group-hover:text-red-600 group-hover:scale-110 transition-all duration-300" />
+                        <span className="text-gray-700 font-medium">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            {/* FAQ Section */}
+            <section className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-purple-500 to-pink-600 rounded-full mr-3 shadow-md">
+                  <MessageCircle className="h-5 w-5 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-700 bg-clip-text text-transparent">Frequently Asked Questions</h2>
+              </div>
+              
+              <div className="mb-6 bg-purple-50 p-4 rounded-lg border border-purple-100 transform hover:scale-[1.01] transition-transform duration-300">
+                <p className="text-purple-800 font-medium flex items-center">
+                  <MessageCircle className="h-5 w-5 mr-2 text-purple-600" />
+                  Common questions and answers about this trip.
+                </p>
+              </div>
+
+              <Accordion type="single" collapsible className="w-full">
+                {trip.faqs.map((faq, index) => (
+                  <AccordionItem key={index} value={`item-${index}`} className="border border-purple-100 rounded-lg mb-3 px-4">
+                    <AccordionTrigger className="text-left hover:text-purple-600 transition-colors duration-300">
+                      {faq.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-gray-700 bg-purple-50 -mx-4 -mb-4 px-4 pb-4 rounded-b-lg">
+                      {faq.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </section>
+
+            {/* Cancellation Policy */}
+            <section className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-amber-500 to-orange-600 rounded-full mr-3 shadow-md">
+                  <Shield className="h-5 w-5 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-amber-600 to-orange-700 bg-clip-text text-transparent">Cancellation Policy</h2>
+              </div>
+              
+              <div className="bg-gradient-to-r from-amber-50 to-orange-50 p-4 rounded-lg border border-amber-100">
+                <p className="text-amber-800 font-medium flex items-center mb-3">
+                  <Shield className="h-5 w-5 mr-2 text-amber-600" />
+                  Important cancellation terms and conditions.
+                </p>
+                <p className="text-gray-700 leading-relaxed">{trip.cancellationPolicy}</p>
+              </div>
+            </section>
           </div>
 
-          {/* Enhanced Booking Sidebar */}
+          {/* Booking Sidebar */}
           <div className="lg:col-span-1">
-            <div className="sticky top-8 space-y-8">
-              {/* Enhanced Booking Card */}
-              <Card className="border-0 shadow-2xl hover:shadow-3xl transition-all duration-500 animate-fadeInUp">
-                <CardHeader className="text-center pb-6 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-t-xl">
-                  <div className="flex items-center justify-center gap-4 mb-4">
-                    <span className="text-4xl md:text-5xl font-bold">{trip.price}</span>
+            <div className="sticky top-24 space-y-6">
+              {/* Pricing Card */}
+              <Card className="shadow-lg">
+                <CardHeader className="text-center">
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <span className="text-3xl font-bold text-green-600">{trip.price}</span>
                     {trip.originalPrice && (
-                      <span className="text-2xl text-white/70 line-through">{trip.originalPrice}</span>
+                      <span className="text-lg text-gray-500 line-through">{trip.originalPrice}</span>
                     )}
                   </div>
-                  <p className="text-white/90 text-lg">per person</p>
+                  <p className="text-sm text-gray-600">per person</p>
+                  {trip.originalPrice && (
+                    <div className="mt-2">
+                      <span className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-full px-3 py-1 text-xs font-bold text-white">
+                        SAVE {Math.round((1 - parseInt(trip.price.replace('₹', '').replace(',', '')) / parseInt(trip.originalPrice.replace('₹', '').replace(',', ''))) * 100)}%
+                      </span>
+                    </div>
+                  )}
                 </CardHeader>
-                <CardContent className="p-8 space-y-6">
-                  <div className="bg-gradient-to-r from-yellow-50 to-orange-50 p-6 rounded-2xl border border-yellow-200">
-                    <h4 className="font-bold text-yellow-800 flex items-center gap-3 mb-3 text-lg">
-                      <MessageCircle className="h-6 w-6" />
-                      Quick WhatsApp Booking
+                <CardContent>
+                  <div className="mb-4 bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                    <h4 className="font-medium text-yellow-800 flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4" /> Quick WhatsApp Booking
                     </h4>
-                    <p className="text-yellow-700 leading-relaxed">
-                      Book instantly through WhatsApp for faster confirmations!
+                    <p className="text-sm text-yellow-700 mt-1">
+                      Book instantly through WhatsApp for faster confirmations and immediate responses!
                     </p>
                   </div>
-
+                  
                   <ClientBookingForm tripTitle={trip.title} tripPrice={trip.price} />
 
-                  <div className="pt-6 border-t space-y-4">
-                    <h4 className="font-bold text-center text-xl text-gray-900">Need Help?</h4>
-                    <div className="grid grid-cols-2 gap-4">
+                  {/* Contact Options */}
+                  <div className="mt-6 pt-6 border-t space-y-3">
+                    <h4 className="font-medium text-center">Need Help?</h4>
+                    <div className="flex gap-2">
                       <Button
                         onClick={handleCallNow}
-                        className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 py-3 btn-animate"
+                        className="flex-1 flex items-center justify-center gap-2 py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
                       >
-                        <Phone className="h-5 w-5 mr-2" />
+                        <Phone className="w-4 h-4" />
                         Call
                       </Button>
                       <Button
                         onClick={handleBookNow}
-                        className="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 py-3 btn-animate"
+                        className="flex-1 flex items-center justify-center gap-2 py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
                       >
-                        <MessageCircle className="h-5 w-5 mr-2" />
+                        <MessageCircle className="w-4 h-4" />
                         WhatsApp
                       </Button>
                     </div>
@@ -462,62 +586,50 @@ export function TripDetailPage({ trip }: TripDetailPageProps) {
                 </CardContent>
               </Card>
 
-              {/* Enhanced Pickup Points */}
-              <Card className="border-0 shadow-2xl hover:shadow-3xl transition-all duration-500 animate-fadeInUp stagger-2">
-                <CardHeader className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-t-xl">
-                  <CardTitle className="text-xl flex items-center gap-3">
-                    <MapPin className="h-6 w-6" />
-                    Pickup Points
-                  </CardTitle>
+              {/* Trip Details Card */}
+              <Card className="shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-lg">Trip Details</CardTitle>
                 </CardHeader>
-                <CardContent className="p-6">
-                  <div className="space-y-4">
-                    {trip.pickupPoints.map((point, index) => {
-                      // Handle both old string format and new object format
-                      const location = typeof point === 'string' 
-                        ? (point as string).split(' - ')[0] 
-                        : (point as { location: string; time: string }).location;
-                      const time = typeof point === 'string' 
-                        ? (point as string).split(' - ')[1] 
-                        : (point as { location: string; time: string }).time;
-                      
-                      return (
-                        <div key={index} className="flex items-center justify-between gap-3 p-3 bg-purple-50 rounded-xl hover-lift">
-                          <div className="flex items-center gap-3">
-                            <MapPin className="h-5 w-5 text-purple-600 flex-shrink-0" />
-                            <span className="text-gray-700 font-medium">{location}</span>
-                          </div>
-                          {time && (
-                            <span className="text-purple-600 font-semibold text-sm">{time}</span>
-                          )}
-                        </div>
-                      );
-                    })}
+                <CardContent className="space-y-3">
+                  <div className="flex items-center text-sm">
+                    <Clock className="h-4 w-4 text-gray-500 mr-2" />
+                    <span>{trip.duration}</span>
+                  </div>
+                  <div className="flex items-center text-sm">
+                    <Users className="h-4 w-4 text-gray-500 mr-2" />
+                    <span>{trip.groupSize} people per group</span>
+                  </div>
+                  <div className="flex items-center text-sm">
+                    <MapPin className="h-4 w-4 text-gray-500 mr-2" />
+                    <span>{trip.location}</span>
+                  </div>
+                  <div className="flex items-center text-sm">
+                    <Star className="h-4 w-4 text-yellow-500 mr-2" />
+                    <span>{trip.rating}/5 ({trip.reviews} reviews)</span>
                   </div>
                 </CardContent>
               </Card>
-
-              {/* Enhanced Safety & Policies */}
-              <Card className="border-0 shadow-2xl hover:shadow-3xl transition-all duration-500 animate-fadeInUp stagger-3">
-                <CardHeader className="bg-gradient-to-r from-emerald-600 to-green-600 text-white rounded-t-xl">
-                  <CardTitle className="text-xl flex items-center gap-3">
-                    <Shield className="h-6 w-6" />
-                    Safety & Policies
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-6 space-y-6">
-                  <div className="p-4 bg-emerald-50 rounded-xl">
-                    <h4 className="font-bold text-emerald-800 mb-2 text-lg">Cancellation Policy</h4>
-                    <p className="text-emerald-700 leading-relaxed">{trip.cancellationPolicy}</p>
+              
+              {/* Sample Testimonial */}
+              <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl p-5 border border-emerald-100">
+                <div className="flex items-center mb-4">
+                  <div className="h-12 w-12 rounded-full bg-white p-0.5 shadow-md mr-3">
+                    <div className="h-full w-full rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-white font-bold text-lg">
+                      {trip.title.charAt(0)}
+                    </div>
                   </div>
-                  <div className="p-4 bg-blue-50 rounded-xl">
-                    <h4 className="font-bold text-blue-800 mb-2 text-lg">Safety Measures</h4>
-                    <p className="text-blue-700 leading-relaxed">
-                      First aid kit, experienced guides, and safety briefings included.
-                    </p>
+                  <div>
+                    <h4 className="font-bold text-gray-800">Verified Traveler</h4>
+                    <div className="flex items-center">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
+                      ))}
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+                <p className="text-gray-600 italic">"Amazing experience with Abhi Trip! The {trip.title.toLowerCase()} was perfectly organized with great guides and beautiful locations. Highly recommended for anyone looking for adventure and memories that last a lifetime."</p>
+              </div>
             </div>
           </div>
         </div>
