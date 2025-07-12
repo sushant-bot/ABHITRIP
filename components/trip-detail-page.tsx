@@ -503,17 +503,27 @@ export function TripDetailPage({ trip }: TripDetailPageProps) {
                 </CardHeader>
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    {trip.pickupPoints.slice(0, 3).map((point, index) => (
-                      <div key={index} className="flex items-center gap-3 p-3 bg-purple-50 rounded-xl hover-lift">
-                        <MapPin className="h-5 w-5 text-purple-600 flex-shrink-0" />
-                        <span className="text-gray-700 font-medium">{point}</span>
-                      </div>
-                    ))}
-                    {trip.pickupPoints.length > 3 && (
-                      <p className="text-gray-500 text-sm mt-4 text-center bg-gray-50 p-3 rounded-xl">
-                        +{trip.pickupPoints.length - 3} more pickup points available
-                      </p>
-                    )}
+                    {trip.pickupPoints.map((point, index) => {
+                      // Handle both old string format and new object format
+                      const location = typeof point === 'string' 
+                        ? (point as string).split(' - ')[0] 
+                        : (point as { location: string; time: string }).location;
+                      const time = typeof point === 'string' 
+                        ? (point as string).split(' - ')[1] 
+                        : (point as { location: string; time: string }).time;
+                      
+                      return (
+                        <div key={index} className="flex items-center justify-between gap-3 p-3 bg-purple-50 rounded-xl hover-lift">
+                          <div className="flex items-center gap-3">
+                            <MapPin className="h-5 w-5 text-purple-600 flex-shrink-0" />
+                            <span className="text-gray-700 font-medium">{location}</span>
+                          </div>
+                          {time && (
+                            <span className="text-purple-600 font-semibold text-sm">{time}</span>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 </CardContent>
               </Card>

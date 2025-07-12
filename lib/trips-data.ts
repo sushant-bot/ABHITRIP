@@ -30,7 +30,7 @@ export interface Trip {
     question: string
     answer: string
   }[]
-  pickupPoints: string[]
+  pickupPoints: (string | { location: string; time: string })[]
   cancellationPolicy: string
   thingsToCarry: string[]
 }
@@ -116,15 +116,15 @@ export const allTrips: Trip[] = [
       },
     ],
     pickupPoints: [
-      "Gopalan Arcade, RR Nagar - 11:15 PM",
-      "Kathriguppe Circle - 11:30 PM",
-      "BMTC Bus Stop, Banashankari - 11:45 PM",
-      "Udupi Garden Signal, BTM Layout - 12:05 AM",
-      "Bus Stop, Silk Board - 12:15 AM",
-      "Shell Petrol Pump, Bellandur - 12:45 AM",
-      "Opp. Kalamandir, Marathahalli - 01:15 AM",
-      "HP Petrol Pump, Tin Factory - 01:35 AM",
-      "Opp. Esteem Mall, Hebbal - 01:45 AM",
+      { location: "Gopalan Arcade, RR Nagar", time: "11:15 PM" },
+      { location: "Kathriguppe Circle", time: "11:30 PM" },
+      { location: "BMTC Bus Stop, Banashankari", time: "11:45 PM" },
+      { location: "Udupi Garden Signal, BTM Layout", time: "12:05 AM" },
+      { location: "Bus Stop, Silk Board", time: "12:15 AM" },
+      { location: "Shell Petrol Pump, Bellandur", time: "12:45 AM" },
+      { location: "Opp. Kalamandir, Marathahalli", time: "01:15 AM" },
+      { location: "HP Petrol Pump, Tin Factory", time: "01:35 AM" },
+      { location: "Opp. Esteem Mall, Hebbal", time: "01:45 AM" },
     ],
     cancellationPolicy:
       "Free cancellation up to 24 hours before the trip. 50% refund for cancellations within 24 hours.",
