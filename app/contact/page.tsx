@@ -89,7 +89,7 @@ Looking forward to hearing from you!`
       <section className="relative bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white py-24 pt-32 overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/placeholder.svg?height=800&width=1200"
+            src="https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
             alt="Contact us for your next adventure"
             fill
             className="object-cover opacity-20"
@@ -371,7 +371,7 @@ Looking forward to hearing from you!`
       <section className="py-20 bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white relative overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/placeholder.svg?height=600&width=1200"
+            src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80"
             alt="Adventure background"
             fill
             className="object-cover opacity-10"

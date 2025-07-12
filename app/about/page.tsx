@@ -115,7 +115,7 @@ export default function AboutPage() {
       <section className="relative bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white py-24 pt-32 overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/placeholder.svg?height=800&width=1200"
+            src="https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
             alt="Abhi Trip team adventure"
             fill
             className="object-cover opacity-20"
@@ -207,7 +207,7 @@ export default function AboutPage() {
             <div className="relative">
               <div className="relative z-10">
                 <Image
-                  src="/placeholder.svg?height=500&width=600"
+                  src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80"
                   alt="Abhi Trip adventure experiences"
                   width={600}
                   height={500}
@@ -383,7 +383,7 @@ export default function AboutPage() {
       <section className="py-20 bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white relative overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/placeholder.svg?height=600&width=1200"
+            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
             alt="Join our adventure"
             fill
             className="object-cover opacity-10"

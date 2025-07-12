@@ -7,7 +7,7 @@ export default function GalleryPage() {
   const galleryImages = [
     {
       id: 1,
-      src: "/placeholder.svg?height=400&width=400",
+      src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       title: "Nandi Hills Sunrise",
       location: "Nandi Hills",
       category: "Sunrise Trek",
@@ -15,7 +15,7 @@ export default function GalleryPage() {
     },
     {
       id: 2,
-      src: "/placeholder.svg?height=400&width=400",
+      src: "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       title: "Savandurga Adventure",
       location: "Savandurga",
       category: "Rock Climbing",
@@ -23,7 +23,7 @@ export default function GalleryPage() {
     },
     {
       id: 3,
-      src: "/placeholder.svg?height=400&width=400",
+      src: "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       title: "Skandagiri Night Trek",
       location: "Skandagiri",
       category: "Night Trek",
@@ -31,7 +31,7 @@ export default function GalleryPage() {
     },
     {
       id: 4,
-      src: "/placeholder.svg?height=400&width=400",
+      src: "https://images.unsplash.com/photo-1669744665015-33f3a2f657b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       title: "Coorg – The Scotland of India",
       location: "Coorg",
       category: "Hill Station",
@@ -39,7 +39,7 @@ export default function GalleryPage() {
     },
     {
       id: 5,
-      src: "/placeholder.svg?height=400&width=400",
+      src: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       title: "Hampi Heritage",
       location: "Hampi",
       category: "Heritage Tour",
@@ -47,7 +47,7 @@ export default function GalleryPage() {
     },
     {
       id: 6,
-      src: "/placeholder.svg?height=400&width=400",
+      src: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       title: "Gokarna Beach Bliss",
       location: "Gokarna",
       category: "Beach Tour",
@@ -55,7 +55,7 @@ export default function GalleryPage() {
     },
     {
       id: 7,
-      src: "/placeholder.svg?height=400&width=400",
+      src: "https://images.unsplash.com/photo-1526392060635-9d6019884377?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       title: "Chikmagalur Hills",
       location: "Chikmagalur",
       category: "Hill Station",
@@ -63,7 +63,7 @@ export default function GalleryPage() {
     },
     {
       id: 8,
-      src: "/placeholder.svg?height=400&width=400",
+      src: "https://images.unsplash.com/photo-1503220317375-aaad61436b1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       title: "Kabini Wildlife",
       location: "Kabini",
       category: "Wildlife Safari",
@@ -71,7 +71,7 @@ export default function GalleryPage() {
     },
     {
       id: 9,
-      src: "/placeholder.svg?height=400&width=400",
+      src: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       title: "Couple Trekking",
       location: "Forest Trails",
       category: "Couple Adventure",
@@ -79,7 +79,7 @@ export default function GalleryPage() {
     },
     {
       id: 10,
-      src: "/placeholder.svg?height=400&width=400",
+      src: "https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       title: "Mountain Sunrise",
       location: "Western Ghats",
       category: "Sunrise Trek",
@@ -87,7 +87,7 @@ export default function GalleryPage() {
     },
     {
       id: 11,
-      src: "/placeholder.svg?height=400&width=400",
+      src: "https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       title: "Mountain Expedition",
       location: "High Peaks",
       category: "Trekking",
@@ -95,7 +95,7 @@ export default function GalleryPage() {
     },
     {
       id: 12,
-      src: "/placeholder.svg?height=400&width=400",
+      src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       title: "Stream Crossing",
       location: "Forest Streams",
       category: "Adventure Trek",
@@ -123,7 +123,7 @@ export default function GalleryPage() {
       <section className="relative bg-gradient-to-br from-pink-900 via-purple-900 to-indigo-900 text-white py-24 pt-32 overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/placeholder.svg?height=800&width=1200"
+            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
             alt="Adventure gallery showcase"
             fill
             className="object-cover opacity-20"
@@ -296,7 +296,7 @@ export default function GalleryPage() {
       <section className="py-20 bg-gradient-to-br from-pink-900 via-purple-900 to-indigo-900 text-white relative overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/placeholder.svg?height=600&width=1200"
+            src="https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
             alt="Adventure background"
             fill
             className="object-cover opacity-10"

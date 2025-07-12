@@ -11,7 +11,10 @@ export const metadata: Metadata = {
   title: "Abhi Trip - Adventure Travel Company in Karnataka",
   description:
     "Explore. Experience. Escape. Karnataka's #1 Adventure Travel Company offering thrilling treks and weekend getaways.",
-    generator: 'v0.dev'
+  generator: 'v0.dev',
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({
@@ -21,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className} suppressHydrationWarning={true}>
         <Header />
         <main>{children}</main>
         <Footer />

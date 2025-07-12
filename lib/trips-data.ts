@@ -240,7 +240,7 @@ export const allTrips: Trip[] = [
       "Experience the magic of trekking under the stars and watching the sunrise from above the clouds! The Skandagiri Sunrise Trek offers an unforgettable night hike through ancient fort ruins, misty trails, and panoramic views of Nandi Hills and beyond.",
     detailedDescription:
       "Experience the magic of trekking under the stars and watching the sunrise from above the clouds! The Skandagiri Sunrise Trek offers an unforgettable night hike through ancient fort ruins, misty trails, and panoramic views of Nandi Hills and beyond. Just 70 km from Bangalore, this trek is perfect for both beginners and seasoned adventurers looking for a quick escape into nature.",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     price: "₹1249",
     originalPrice: "₹1499",
     duration: "1 Day",
@@ -287,10 +287,10 @@ export const allTrips: Trip[] = [
       "Insurance or items not listed under inclusions",
     ],
     gallery: [
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1464822759844-d150f64aeb49?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     ],
     faqs: [
       {
@@ -429,7 +429,7 @@ export const allTrips: Trip[] = [
       "Looking for a thrilling night trek with breathtaking sunrise views? The Kunti Betta Sunrise Trek is the perfect blend of adventure, nature, and mythology, just 125 km from Bangalore in the historic town of Pandavapura, near Mysore.",
     detailedDescription:
       "Looking for a thrilling night trek with breathtaking sunrise views? The Kunti Betta Sunrise Trek is the perfect blend of adventure, nature, and mythology, just 125 km from Bangalore in the historic town of Pandavapura, near Mysore. This trek offers a unique combination of mythological significance and natural beauty, making it perfect for adventure enthusiasts.",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     price: "₹799",
     originalPrice: "₹999",
     duration: "1 Day",
@@ -479,20 +479,25 @@ export const allTrips: Trip[] = [
       "Insurance or items not listed under inclusions",
     ],
     gallery: [
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1464822759844-d150f64aeb49?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     ],
     faqs: [
       {
-        question: "What is the mythological significance of Kunti Betta?",
-        answer:
-          "Kunti Betta is believed to be connected to the Mahabharata, where Kunti (mother of Pandavas) is said to have stayed here.",
+        question: "What time do we start the trek?",
+        answer: "We start early at 11:15 PM from Bangalore to catch the sunrise at Kunti Betta around 5:30 AM.",
       },
       {
         question: "Is this trek suitable for beginners?",
-        answer: "Yes, this is an easy trek perfect for beginners and families looking for a night trekking experience.",
+        answer:
+          "Yes, this is an easy trek suitable for beginners and families. The trail is well-marked and not too steep.",
+      },
+      {
+        question: "What should I wear?",
+        answer:
+          "Wear comfortable trekking shoes, warm clothes (it gets cold in the morning), and carry a light jacket.",
       },
     ],
     pickupPoints: [
@@ -526,7 +531,7 @@ export const allTrips: Trip[] = [
       "Embark on a unique day adventure where spiritual calm and historic thrill come together! The Adiyogi & Gudibande Fort Trek offers the perfect blend of peaceful vibes, scenic views, and a short hike — making it an ideal getaway for both beginners and weekend explorers.",
     detailedDescription:
       "Embark on a unique day adventure where spiritual calm and historic thrill come together! The Adiyogi & Gudibande Fort Trek offers the perfect blend of peaceful vibes, scenic views, and a short hike — making it an ideal getaway for both beginners and weekend explorers. Experience the majestic Adiyogi statue and explore the ancient Gudibande Fort in one memorable day trip.",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "https://images.unsplash.com/photo-1548013146-72479768bada?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     price: "₹999",
     originalPrice: "₹1299",
     duration: "1 Day",
@@ -572,10 +577,10 @@ export const allTrips: Trip[] = [
       "Insurance or items not listed under inclusions",
     ],
     gallery: [
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
+      "https://images.unsplash.com/photo-1548013146-72479768bada?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1605640840605-14ac1855827b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     ],
     faqs: [
       {
@@ -666,11 +671,11 @@ export const allTrips: Trip[] = [
     ],
     gallery: [
       "https://images.unsplash.com/photo-1669744665015-33f3a2f657b3?q=80&w=1342&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
+      "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1605640840605-14ac1855827b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     ],
     faqs: [
       {
@@ -786,9 +791,9 @@ export const allTrips: Trip[] = [
     ],
     gallery: [
       "https://images.unsplash.com/photo-1526392060635-9d6019884377?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     ],
     faqs: [
       {
@@ -898,9 +903,9 @@ export const allTrips: Trip[] = [
     ],
     gallery: [
       "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1605640840605-14ac1855827b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     ],
     faqs: [
       {
@@ -1010,9 +1015,9 @@ export const allTrips: Trip[] = [
     ],
     gallery: [
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Netravati%20Trek%20Two%20Day.jpg-xxpUEATovirX0mWbFkiEKBPqNaIbW8.jpeg",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1464822759844-d150f64aeb49?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     ],
     faqs: [
       {
@@ -1058,7 +1063,7 @@ export const allTrips: Trip[] = [
       "Bandaje Falls Trek is a scenic adventure through the Western Ghats, leading to a stunning waterfall hidden amidst lush forests and rolling hills. Perfect for nature lovers and thrill-seekers alike.",
     detailedDescription:
       "Bandaje Falls Trek is a scenic adventure through the Western Ghats, leading to a stunning waterfall hidden amidst lush forests and rolling hills. Perfect for nature lovers and thrill-seekers alike. Experience the pristine beauty of one of Karnataka's most spectacular waterfalls.",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     price: "₹3,899",
     originalPrice: "₹4,399",
     duration: "2 Days / 1 Night",
@@ -1126,10 +1131,10 @@ export const allTrips: Trip[] = [
       "Anything not listed in the 'Inclusions'",
     ],
     gallery: [
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
+      "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1464822759844-d150f64aeb49?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     ],
     faqs: [
       {
@@ -1224,7 +1229,7 @@ export const allTrips: Trip[] = [
       { time: "2:00 – 3:00 PM", activity: "Explore the peaceful Pine Tree Forest" },
       { time: "3:00 – 4:00 PM", activity: "Visit 6th Mile Shooting Point for panoramic views" },
       { time: "4:00 PM", activity: "Depart from Ooty to Bangalore" },
-      { time: "12:00 AM", activity: "Arrive in Bengaluru" },
+           { time: "12:00 AM", activity: "Arrive in Bengaluru" },
     ],
     included: [
       "Non-A/C round-trip transport from Bangalore",
@@ -1242,9 +1247,9 @@ export const allTrips: Trip[] = [
     ],
     gallery: [
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/OOTY%20Two%20Day%20trek.jpg-jtMlm9MWgEY9cSrgNtJcEUvDZu9kJ3.jpeg",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1564737009719-7e19c924b8b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     ],
     faqs: [
       {
@@ -1292,7 +1297,7 @@ export const allTrips: Trip[] = [
       "Kudremukh Trek is a breathtaking journey through rolling hills, dense forests, and mist-covered valleys in the Western Ghats. Known for its iconic horse-face peak, it offers a perfect blend of adventure and natural beauty.",
     detailedDescription:
       "Kudremukh Trek is a breathtaking journey through rolling hills, dense forests, and mist-covered valleys in the Western Ghats. Known for its iconic horse-face peak, it offers a perfect blend of adventure and natural beauty. Experience one of Karnataka's most popular and scenic treks.",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     price: "₹3,899",
     originalPrice: "₹4,399",
     duration: "2 Days / 1 Night",
@@ -1356,10 +1361,10 @@ export const allTrips: Trip[] = [
       "Anything not listed in the 'Inclusions'",
     ],
     gallery: [
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1464822759844-d150f64aeb49?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     ],
     faqs: [
       {
@@ -1473,9 +1478,9 @@ export const allTrips: Trip[] = [
     ],
     gallery: [
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Waynad%20Two%20Day%20trek.jpg-qAdduwcXiVR47cV2HbAkDKVupohd4i.jpeg",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
+      "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1605640840605-14ac1855827b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     ],
     faqs: [
       {
@@ -1524,7 +1529,7 @@ export const allTrips: Trip[] = [
       "Dandeli is an adventure lover's paradise nestled in the Western Ghats of Karnataka. From thrilling white-water rafting on the Kali River to jungle safaris, ziplining, and kayaking—Dandeli offers non-stop excitement in the heart of nature. It's the perfect weekend getaway for adrenaline junkies and nature enthusiasts alike.",
     detailedDescription:
       "Dandeli is an adventure lover's paradise nestled in the Western Ghats of Karnataka. From thrilling white-water rafting on the Kali River to jungle safaris, ziplining, and kayaking—Dandeli offers non-stop excitement in the heart of nature. It's the perfect weekend getaway for adrenaline junkies and nature enthusiasts alike.",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     price: "₹4,999",
     originalPrice: "₹5,499",
     duration: "2 Days / 1 Night",
@@ -1592,10 +1597,10 @@ export const allTrips: Trip[] = [
       "Anything not included above",
     ],
     gallery: [
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
+      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     ],
     faqs: [
       {

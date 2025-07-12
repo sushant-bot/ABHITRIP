@@ -62,7 +62,7 @@ export default function HomePage() {
     {
       title: "One Day Adventures",
       description: "Perfect weekend escapes from Bangalore",
-      image: "/placeholder.svg?height=300&width=400",
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80",
       icon: Mountain,
       href: "/one-day-trips",
       gradient: "from-blue-500 to-blue-600",
@@ -71,7 +71,7 @@ export default function HomePage() {
     {
       title: "Two Day Getaways",
       description: "Extended adventures with comfortable stays",
-      image: "/placeholder.svg?height=300&width=400",
+      image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80",
       icon: Waves,
       href: "/two-day-trips",
       gradient: "from-green-500 to-green-600",
@@ -80,7 +80,7 @@ export default function HomePage() {
     {
       title: "Custom Journeys",
       description: "Tailored experiences just for you",
-      image: "/placeholder.svg?height=300&width=400",
+      image: "https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80",
       icon: Camera,
       href: "/customized-trips",
       gradient: "from-orange-500 to-orange-600",
@@ -239,7 +239,7 @@ export default function HomePage() {
       <section className="py-16 bg-gradient-to-br from-blue-900 to-green-900 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <Image
-            src="/placeholder.svg?height=800&width=1200"
+            src="https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80"
             alt="Group adventure at sunset"
             fill
             className="object-cover"
@@ -293,7 +293,7 @@ export default function HomePage() {
             <div className="relative">
               <div className="relative z-10">
                 <Image
-                  src="/placeholder.svg?height=500&width=600"
+                  src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=500&q=80"
                   alt="Group camping experience"
                   width={600}
                   height={500}
@@ -313,7 +313,7 @@ export default function HomePage() {
       <section className="py-16 bg-gradient-to-r from-blue-600 to-green-600 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <Image
-            src="/placeholder.svg?height=600&width=1200"
+            src="https://images.unsplash.com/photo-1464822759844-d150f64aeb49?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600&q=80"
             alt="Mountain trekking group"
             fill
             className="object-cover"

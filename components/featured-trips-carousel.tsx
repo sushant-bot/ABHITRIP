@@ -47,7 +47,7 @@ const featuredTrips = [
     groupSize: "8-15 people",
     rating: 4.7,
     price: "₹3,800",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
     description: "Explore the lush forests and waterfalls of Wayanad",
     highlights: ["Edakkal Caves", "Banasura Dam", "Pookode Lake", "Soochipara Falls"],
     category: "Adventure",

@@ -8,7 +8,7 @@ const trips = [
     description: "Tailor-made adventure experiences to suit your preferences.",
     price: "₹2,999",
     originalPrice: "₹3,499",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80",
   },
   {
     slug: "corporate-team-building",
@@ -16,7 +16,7 @@ const trips = [
     description: "Strengthen your team with engaging outdoor activities.",
     price: "₹3,499",
     originalPrice: "₹3,999",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80",
   },
   {
     slug: "photography-expedition",
@@ -24,7 +24,7 @@ const trips = [
     description: "Capture stunning landscapes and wildlife with expert guidance.",
     price: "₹4,299",
     originalPrice: "₹4,799",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80",
   },
   {
     slug: "family-adventure-package",
@@ -32,7 +32,7 @@ const trips = [
     description: "Create lasting memories with exciting family-friendly adventures.",
     price: "₹2,799",
     originalPrice: "₹3,299",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80",
   },
   {
     slug: "wellness-yoga-retreat",
@@ -40,7 +40,7 @@ const trips = [
     description: "Rejuvenate your mind and body in serene natural settings.",
     price: "₹3,999",
     originalPrice: "₹4,499",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "https://images.unsplash.com/photo-1545389336-cf090694435e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80",
   },
   {
     slug: "adventure-sports-package",
@@ -48,7 +48,7 @@ const trips = [
     description: "Experience thrilling adventure sports like never before.",
     price: "₹4,999",
     originalPrice: "₹5,499",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80",
   },
 ]
 
