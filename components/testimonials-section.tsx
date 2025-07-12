@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react"
-import Image from "next/image"
+
 
 const testimonials = [
   {
@@ -13,7 +13,6 @@ const testimonials = [
     location: "Bangalore",
     rating: 5,
     text: "Amazing experience with Abhi Trip! The Coorg trip was perfectly organized. Our guide was knowledgeable and the group size was just right. The viewpoints were breathtaking! Highly recommended!",
-    image: "/placeholder.svg?height=80&width=80",
     trip: "Coorg Trip – The Scotland of India",
   },
   {
@@ -22,7 +21,6 @@ const testimonials = [
     location: "Bangalore",
     rating: 5,
     text: "The Hampi heritage tour exceeded all expectations. The historical insights provided by the guide were fascinating. Great value for money and excellent service throughout.",
-    image: "/placeholder.svg?height=80&width=80",
     trip: "Hampi Heritage Adventure",
   },
   {
@@ -31,7 +29,6 @@ const testimonials = [
     location: "Hyderabad",
     rating: 5,
     text: "Loved the Nandi Hills sunrise trek! Early morning start was worth it for those breathtaking views. The team was professional and safety was their priority.",
-    image: "/placeholder.svg?height=80&width=80",
     trip: "Nandi Hills Sunrise Trek",
   },
   {
@@ -40,7 +37,7 @@ const testimonials = [
     location: "Bangalore",
     rating: 4,
     text: "Great experience at Gokarna! The beach was pristine and the temple visits were enlightening. The accommodation was comfortable and the food was delicious.",
-    image: "/placeholder.svg?height=80&width=80",
+  
     trip: "Gokarna and Murudeshwar Trip",
   },
 ]
@@ -93,13 +90,7 @@ export function TestimonialsSection() {
                 </div>
 
                 <div className="flex items-center justify-center space-x-4">
-                  <Image
-                    src={currentTestimonial.image || "/placeholder.svg"}
-                    alt={currentTestimonial.name}
-                    width={80}
-                    height={80}
-                    className="rounded-full border-4 border-blue-100"
-                  />
+                  {/* Image removed as requested */}
                   <div className="text-left">
                     <div className="font-bold text-lg text-gray-900">{currentTestimonial.name}</div>
                     <div className="text-gray-600">{currentTestimonial.location}</div>
