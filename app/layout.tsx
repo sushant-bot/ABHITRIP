@@ -11,9 +11,9 @@ export const metadata: Metadata = {
   title: "Abhi Trip - Adventure Travel Company in Karnataka",
   description:
     "Explore. Experience. Escape. Karnataka's #1 Adventure Travel Company offering thrilling treks and weekend getaways.",
-  generator: 'v0.dev',
+  generator: '',
   icons: {
-    icon: '/favicon.svg',
+    icon: '/abhi-trip-logo.png',
   },
 }
 
