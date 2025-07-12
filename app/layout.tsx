@@ -14,6 +14,8 @@ export const metadata: Metadata = {
   generator: '',
   icons: {
     icon: '/abhi-trip-logo.png',
+    apple: '/abhi-trip-logo.png',
+    shortcut: '/abhi-trip-logo.png',
   },
 }
 

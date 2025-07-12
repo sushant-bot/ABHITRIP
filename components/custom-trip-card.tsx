@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Settings } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 interface CustomTrip {
   slug: string
@@ -44,7 +45,9 @@ export function CustomTripCard({ trip }: CustomTripCardProps) {
             <div className="text-2xl font-bold text-emerald-600">{trip.price}</div>
             <div className="text-sm text-gray-500 line-through">{trip.originalPrice}</div>
           </div>
-          <Button className="bg-emerald-600 hover:bg-emerald-700">Customize</Button>
+          <Link href="/contact">
+            <Button className="bg-emerald-600 hover:bg-emerald-700">Customize</Button>
+          </Link>
         </div>
       </CardContent>
     </Card>

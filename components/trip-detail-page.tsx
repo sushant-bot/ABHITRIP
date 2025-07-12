@@ -18,7 +18,6 @@ import {
   Calendar,
   CheckCircle,
   Heart,
-  Camera,
   Mountain,
   Sparkles,
 } from "lucide-react"
@@ -65,18 +64,30 @@ export function TripDetailPage({ trip }: TripDetailPageProps) {
         console.log("Error sharing:", err)
       }
     } else {
-      navigator.clipboard.writeText(window.location.href)
-      alert("Link copied to clipboard!")
+      try {
+        await navigator.clipboard.writeText(window.location.href)
+        alert("Link copied to clipboard!")
+      } catch (err) {
+        // Fallback for when clipboard API is not available
+        console.log("Clipboard not available:", err)
+        // Create a temporary input element to copy the text
+        const textArea = document.createElement("textarea")
+        textArea.value = window.location.href
+        document.body.appendChild(textArea)
+        textArea.select()
+        document.execCommand("copy")
+        document.body.removeChild(textArea)
+        alert("Link copied to clipboard!")
+      }
     }
   }
 
-  const tabsToShow =
-    trip.category === "one-day" ? ["itinerary", "inclusions", "faq"] : ["itinerary", "inclusions", "gallery", "faq"]
+  const tabsToShow = ["itinerary", "inclusions", "faq"]
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       {/* Enhanced Hero Section */}
-      <section className="relative h-[70vh] md:h-[85vh] overflow-hidden">
+      <section className="relative h-[60vh] sm:h-[70vh] md:h-[85vh] overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src={trip.image || "/placeholder.svg"}
@@ -93,46 +104,47 @@ export function TripDetailPage({ trip }: TripDetailPageProps) {
         </div>
 
         {/* Enhanced Navigation */}
-        <div className="absolute top-6 left-6 z-20 animate-fadeInLeft">
+        <div className="absolute top-4 left-4 md:top-6 md:left-6 z-20 animate-fadeInLeft">
           <Link href={trip.category === "one-day" ? "/one-day-trips" : "/two-day-trips"}>
             <Button
               variant="secondary"
-              size="lg"
-              className="glass text-white border-white/30 hover:bg-white/20 shadow-xl backdrop-blur-md px-6 py-3"
+              size="sm"
+              className="glass text-white border-white/30 hover:bg-white/20 shadow-xl backdrop-blur-md px-3 py-2 md:px-6 md:py-3 text-sm md:text-base"
             >
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              Back to Trips
+              <ArrowLeft className="h-4 w-4 md:h-5 md:w-5 mr-1 md:mr-2" />
+              <span className="hidden sm:inline">Back to Trips</span>
+              <span className="sm:hidden">Back</span>
             </Button>
           </Link>
         </div>
 
         {/* Enhanced Action Buttons */}
-        <div className="absolute top-6 right-6 z-20 flex gap-3 animate-fadeInRight">
+        <div className="absolute top-4 right-4 md:top-6 md:right-6 z-20 flex gap-2 md:gap-3 animate-fadeInRight">
           <Button
             variant="secondary"
-            size="lg"
-            className="glass text-white border-white/30 hover:bg-white/20 shadow-xl backdrop-blur-md p-3"
+            size="sm"
+            className="glass text-white border-white/30 hover:bg-white/20 shadow-xl backdrop-blur-md p-2 md:p-3"
             onClick={() => setIsLiked(!isLiked)}
           >
-            <Heart className={`h-5 w-5 transition-colors ${isLiked ? "fill-red-500 text-red-500" : ""}`} />
+            <Heart className={`h-4 w-4 md:h-5 md:w-5 transition-colors ${isLiked ? "fill-red-500 text-red-500" : ""}`} />
           </Button>
           <Button
             variant="secondary"
-            size="lg"
-            className="glass text-white border-white/30 hover:bg-white/20 shadow-xl backdrop-blur-md p-3"
+            size="sm"
+            className="glass text-white border-white/30 hover:bg-white/20 shadow-xl backdrop-blur-md p-2 md:p-3"
             onClick={handleShare}
           >
-            <Share2 className="h-5 w-5" />
+            <Share2 className="h-4 w-4 md:h-5 md:w-5" />
           </Button>
         </div>
 
         {/* Enhanced Hero Content */}
-        <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
+        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-8 lg:p-12">
           <div className="container mx-auto">
             <div className={`max-w-5xl transition-all duration-1000 ${isVisible ? "animate-fadeInUp" : "opacity-0"}`}>
-              <div className="flex flex-wrap items-center gap-4 mb-6 animate-fadeInUp stagger-1">
-                <Badge variant="secondary" className="glass text-white border-white/30 px-4 py-2 text-lg font-medium">
-                  <Sparkles className="w-4 h-4 mr-2" />
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6 animate-fadeInUp stagger-1">
+                <Badge variant="secondary" className="glass text-white border-white/30 px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 text-xs sm:text-sm md:text-lg font-medium">
+                  <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                   {trip.category === "one-day" ? "One Day Trip" : "Two Day Trip"}
                 </Badge>
                 <Badge
@@ -143,55 +155,55 @@ export function TripDetailPage({ trip }: TripDetailPageProps) {
                       : trip.difficulty === "Moderate"
                         ? "bg-amber-500/80 text-white border-0"
                         : "bg-red-500/80 text-white border-0"
-                  } backdrop-blur-sm px-4 py-2 text-lg font-medium`}
+                  } backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 text-xs sm:text-sm md:text-lg font-medium`}
                 >
                   {trip.difficulty}
                 </Badge>
               </div>
 
-              <h1 className="text-4xl md:text-7xl font-bold text-white mb-6 animate-fadeInUp stagger-2 leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 animate-fadeInUp stagger-2 leading-tight">
                 {trip.title}
               </h1>
 
-              <div className="flex flex-wrap items-center gap-6 md:gap-8 text-white/90 mb-8 text-lg animate-fadeInUp stagger-3">
-                <div className="flex items-center gap-3 glass rounded-xl px-4 py-3">
-                  <MapPin className="h-6 w-6 text-blue-300" />
-                  <span className="font-medium">{trip.location}</span>
+              <div className="grid grid-cols-2 md:flex md:flex-wrap items-center gap-2 sm:gap-3 md:gap-6 lg:gap-8 text-white/90 mb-4 sm:mb-6 md:mb-8 text-xs sm:text-sm md:text-lg animate-fadeInUp stagger-3">
+                <div className="flex items-center gap-2 md:gap-3 glass rounded-lg md:rounded-xl px-2 sm:px-3 md:px-4 py-2 md:py-3">
+                  <MapPin className="h-3 w-3 sm:h-4 sm:w-4 md:h-6 md:w-6 text-blue-300 flex-shrink-0" />
+                  <span className="font-medium truncate">{trip.location}</span>
                 </div>
-                <div className="flex items-center gap-3 glass rounded-xl px-4 py-3">
-                  <Clock className="h-6 w-6 text-emerald-300" />
-                  <span className="font-medium">{trip.duration}</span>
+                <div className="flex items-center gap-2 md:gap-3 glass rounded-lg md:rounded-xl px-2 sm:px-3 md:px-4 py-2 md:py-3">
+                  <Clock className="h-3 w-3 sm:h-4 sm:w-4 md:h-6 md:w-6 text-emerald-300 flex-shrink-0" />
+                  <span className="font-medium truncate">{trip.duration}</span>
                 </div>
-                <div className="flex items-center gap-3 glass rounded-xl px-4 py-3">
-                  <Users className="h-6 w-6 text-purple-300" />
-                  <span className="font-medium">{trip.groupSize} people</span>
+                <div className="flex items-center gap-2 md:gap-3 glass rounded-lg md:rounded-xl px-2 sm:px-3 md:px-4 py-2 md:py-3">
+                  <Users className="h-3 w-3 sm:h-4 sm:w-4 md:h-6 md:w-6 text-purple-300 flex-shrink-0" />
+                  <span className="font-medium truncate">{trip.groupSize} people</span>
                 </div>
-                <div className="flex items-center gap-3 glass rounded-xl px-4 py-3">
-                  <Star className="h-6 w-6 text-yellow-400 fill-current" />
-                  <span className="font-medium">
+                <div className="flex items-center gap-2 md:gap-3 glass rounded-lg md:rounded-xl px-2 sm:px-3 md:px-4 py-2 md:py-3">
+                  <Star className="h-3 w-3 sm:h-4 sm:w-4 md:h-6 md:w-6 text-yellow-400 fill-current flex-shrink-0" />
+                  <span className="font-medium truncate">
                     {trip.rating} ({trip.reviews} reviews)
                   </span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-6 animate-fadeInUp stagger-4">
-                <div className="glass rounded-2xl px-6 py-4 border border-white/20">
-                  <div className="flex items-center gap-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 md:gap-6 animate-fadeInUp stagger-4">
+                <div className="glass rounded-xl md:rounded-2xl px-3 sm:px-4 md:px-6 py-3 md:py-4 border border-white/20">
+                  <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
                     <div>
-                      <div className="text-3xl md:text-4xl font-bold text-white">{trip.price}</div>
-                      <div className="text-sm text-white/70">per person</div>
+                      <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white">{trip.price}</div>
+                      <div className="text-xs sm:text-sm text-white/70">per person</div>
                     </div>
                     {trip.originalPrice && (
-                      <div className="text-white/60 line-through text-xl">{trip.originalPrice}</div>
+                      <div className="text-white/60 line-through text-sm sm:text-lg md:text-xl">{trip.originalPrice}</div>
                     )}
                   </div>
                 </div>
                 <Button
                   onClick={handleBookNow}
-                  size="lg"
-                  className="bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 text-white shadow-xl hover:shadow-2xl transition-all duration-300 px-8 py-4 text-lg font-semibold btn-animate"
+                  size="sm"
+                  className="bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 text-white shadow-xl hover:shadow-2xl transition-all duration-300 px-4 sm:px-6 md:px-8 py-3 md:py-4 text-sm sm:text-base md:text-lg font-semibold btn-animate w-full sm:w-auto"
                 >
-                  <MessageCircle className="w-5 h-5 mr-2" />
+                  <MessageCircle className="w-4 h-4 md:w-5 md:h-5 mr-2" />
                   Book Now
                 </Button>
               </div>
@@ -274,15 +286,6 @@ export function TripDetailPage({ trip }: TripDetailPageProps) {
                   <Check className="w-5 h-5 mr-2" />
                   Inclusions
                 </TabsTrigger>
-                {tabsToShow.includes("gallery") && (
-                  <TabsTrigger
-                    value="gallery"
-                    className="text-lg font-semibold rounded-xl data-[state=active]:bg-white data-[state=active]:shadow-lg"
-                  >
-                    <Camera className="w-5 h-5 mr-2" />
-                    Gallery
-                  </TabsTrigger>
-                )}
                 <TabsTrigger
                   value="faq"
                   className="text-lg font-semibold rounded-xl data-[state=active]:bg-white data-[state=active]:shadow-lg"
@@ -381,40 +384,6 @@ export function TripDetailPage({ trip }: TripDetailPageProps) {
                   </CardContent>
                 </Card>
               </TabsContent>
-
-              {tabsToShow.includes("gallery") && (
-                <TabsContent value="gallery" className="mt-8">
-                  <Card className="border-0 shadow-2xl">
-                    <CardHeader className="bg-gradient-to-r from-pink-600 to-purple-600 text-white rounded-t-xl">
-                      <CardTitle className="text-2xl flex items-center gap-3">
-                        <Camera className="h-7 w-7" />
-                        Photo Gallery
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-8">
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-                        {trip.gallery.map((image, index) => (
-                          <div
-                            key={index}
-                            className="relative h-64 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer group"
-                            onClick={() => setActiveImageIndex(index)}
-                          >
-                            <Image
-                              src={image || "/placeholder.svg"}
-                              alt={`${trip.title} - Image ${index + 1}`}
-                              fill
-                              className="object-cover group-hover:scale-110 transition-transform duration-500"
-                            />
-                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                              <Camera className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-              )}
 
               <TabsContent value="faq" className="mt-8">
                 <Card className="border-0 shadow-2xl">
