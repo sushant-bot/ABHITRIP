@@ -531,7 +531,7 @@ export const allTrips: Trip[] = [
       "Embark on a unique day adventure where spiritual calm and historic thrill come together! The Adiyogi & Gudibande Fort Trek offers the perfect blend of peaceful vibes, scenic views, and a short hike — making it an ideal getaway for both beginners and weekend explorers.",
     detailedDescription:
       "Embark on a unique day adventure where spiritual calm and historic thrill come together! The Adiyogi & Gudibande Fort Trek offers the perfect blend of peaceful vibes, scenic views, and a short hike — making it an ideal getaway for both beginners and weekend explorers. Experience the majestic Adiyogi statue and explore the ancient Gudibande Fort in one memorable day trip.",
-    image: "https://images.unsplash.com/photo-1548013146-72479768bada?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    image: "/adiyogi.jpg",
     price: "₹999",
     originalPrice: "₹1299",
     duration: "1 Day",
@@ -577,10 +577,10 @@ export const allTrips: Trip[] = [
       "Insurance or items not listed under inclusions",
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1548013146-72479768bada?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "/adiyogi.jpg",
       "https://images.unsplash.com/photo-1605640840605-14ac1855827b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     ],
     faqs: [
       {
@@ -903,9 +903,9 @@ export const allTrips: Trip[] = [
     ],
     gallery: [
       "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80",
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1605640840605-14ac1855827b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     ],
     faqs: [
       {
@@ -1326,10 +1326,10 @@ export const allTrips: Trip[] = [
       { time: "09:30 PM", activity: "Join at KTM Mekhri Circle" },
       { time: "09:45 PM", activity: "Board at Yeshwanthpura" },
       { time: "10:00 PM", activity: "Last pickup at Goraguntepalya" },
-      { time: "Day 1 – Kudremukha Trek Adventure", activity: "" },
+      { time: "Day 1 – Kudremukh Trek Adventure", activity: "" },
       { time: "6:00 AM", activity: "Arrive at the homestay and freshen up" },
       { time: "6:30 AM", activity: "Enjoy breakfast and collect your packed lunch" },
-      { time: "7:30 AM", activity: "Head out by jeep to the Kudremukha trek starting point" },
+      { time: "7:30 AM", activity: "Head out by jeep to the Kudremukh trek starting point" },
       { time: "9:00 AM", activity: "Begin the scenic trek through forest trails" },
       { time: "1:30 PM", activity: "Break at the peak for lunch with a view" },
       { time: "2:30 PM", activity: "Start the descent back to base" },
