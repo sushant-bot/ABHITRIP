@@ -20,13 +20,32 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { getTwoDayTrips } from "@/lib/trips-data"
+import { getTwoDayTrips, getTwoDayTripsFromDB } from "@/lib/trips-data"
 
 export default function TwoDayTripsPage() {
   const [trips, setTrips] = useState(getTwoDayTrips())
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedDifficulty, setSelectedDifficulty] = useState("all")
   const [isVisible, setIsVisible] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setIsVisible(true)
+    loadTrips()
+  }, [])
+
+  const loadTrips = async () => {
+    try {
+      const dbTrips = await getTwoDayTripsFromDB()
+      if (dbTrips.length > 0) {
+        setTrips(dbTrips)
+      }
+    } catch (error) {
+      console.error('Failed to load trips from database, using fallback data')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
     setIsVisible(true)

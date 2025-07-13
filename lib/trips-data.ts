@@ -1,3 +1,5 @@
+import { supabase } from './supabase'
+
 export interface Trip {
   id: number
   title: string
@@ -33,6 +35,131 @@ export interface Trip {
   pickupPoints: (string | { location: string; time: string })[]
   cancellationPolicy: string
   thingsToCarry: string[]
+  is_featured?: boolean
+}
+
+// Database functions that fetch from Supabase
+export async function getAllTripsFromDB(): Promise<Trip[]> {
+  try {
+    const { data, error } = await supabase
+      .from('trips')
+      .select('*')
+      .order('created_at', { ascending: false })
+    
+    if (error) {
+      console.error('Error fetching trips:', error)
+      return getFallbackTrips() // Fallback to static data
+    }
+    
+    return data?.map(transformDBToTrip) || []
+  } catch (error) {
+    console.error('Database connection error:', error)
+    return getFallbackTrips()
+  }
+}
+
+export async function getOneDayTripsFromDB(): Promise<Trip[]> {
+  try {
+    const { data, error } = await supabase
+      .from('trips')
+      .select('*')
+      .eq('category', 'one-day')
+      .order('created_at', { ascending: false })
+    
+    if (error) {
+      console.error('Error fetching one-day trips:', error)
+      return getOneDayTrips() // Fallback to static data
+    }
+    
+    return data?.map(transformDBToTrip) || []
+  } catch (error) {
+    console.error('Database connection error:', error)
+    return getOneDayTrips()
+  }
+}
+
+export async function getTwoDayTripsFromDB(): Promise<Trip[]> {
+  try {
+    const { data, error } = await supabase
+      .from('trips')
+      .select('*')
+      .eq('category', 'two-day')
+      .order('created_at', { ascending: false })
+    
+    if (error) {
+      console.error('Error fetching two-day trips:', error)
+      return getTwoDayTrips() // Fallback to static data
+    }
+    
+    return data?.map(transformDBToTrip) || []
+  } catch (error) {
+    console.error('Database connection error:', error)
+    return getTwoDayTrips()
+  }
+}
+
+export async function getTripBySlugFromDB(slug: string): Promise<Trip | null> {
+  try {
+    const { data, error } = await supabase
+      .from('trips')
+      .select('*')
+      .eq('title', slug.replace(/-/g, ' '))
+      .limit(1)
+    
+    if (error || !data || data.length === 0) {
+      console.error('Error fetching trip by slug:', error)
+      return getTripBySlug(slug) || null // Fallback to static data
+    }
+    
+    return transformDBToTrip(data[0])
+  } catch (error) {
+    console.error('Database connection error:', error)
+    return getTripBySlug(slug) || null
+  }
+}
+
+// Transform database row to Trip interface
+function transformDBToTrip(dbTrip: any): Trip {
+  return {
+    id: parseInt(dbTrip.id) || Math.floor(Math.random() * 1000000),
+    title: dbTrip.title,
+    description: dbTrip.description,
+    detailedDescription: dbTrip.detailed_description || dbTrip.description,
+    image: dbTrip.image || '/placeholder.svg',
+    category: dbTrip.category,
+    location: dbTrip.location,
+    duration: dbTrip.duration,
+    price: dbTrip.price,
+    originalPrice: dbTrip.original_price,
+    difficulty: dbTrip.difficulty,
+    groupSize: dbTrip.group_size,
+    rating: dbTrip.rating || 4.5,
+    reviews: dbTrip.reviews || 0,
+    slug: createSlug(dbTrip.title),
+    highlights: dbTrip.highlights || [],
+    itinerary: dbTrip.itinerary || [],
+    pickupPoints: dbTrip.pickup_points || [],
+    thingsToCarry: dbTrip.things_to_carry || [],
+    included: dbTrip.included || [],
+    excluded: dbTrip.excluded || [],
+    faqs: dbTrip.faqs || [],
+    cancellationPolicy: dbTrip.cancellation_policy || 'Standard cancellation policy applies.',
+    gallery: [dbTrip.image].filter(Boolean),
+    is_featured: dbTrip.is_featured || false
+  }
+}
+
+// Helper function to create slug from title
+function createSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+}
+
+// Fallback functions (keep existing static data functions as backup)
+function getFallbackTrips(): Trip[] {
+  return [...getOneDayTrips(), ...getTwoDayTrips()]
 }
 
 export const allTrips: Trip[] = [
@@ -62,6 +189,7 @@ export const allTrips: Trip[] = [
     ],
     location: "60km from Bangalore",
     category: "one-day",
+    is_featured: true,
     itinerary: [
       { time: "Day 0", activity: "Departure from Bengaluru at selected pickup points" },
       { time: "11:15 PM", activity: "Gopalan Arcade, RR Nagar" },
@@ -165,6 +293,7 @@ export const allTrips: Trip[] = [
     ],
     location: "70km from Bangalore",
     category: "one-day",
+    is_featured: false,
     itinerary: [
       { time: "Day 0", activity: "Departure from Bengaluru at selected pickup points" },
       { time: "10:45 PM", activity: "Tin Factory (Benniganahalli Metro)" },
@@ -257,6 +386,7 @@ export const allTrips: Trip[] = [
     ],
     location: "70km from Bangalore",
     category: "one-day",
+    is_featured: true,
     itinerary: [
       { time: "Day 0", activity: "Departure from Bengaluru" },
       { time: "10:45 PM", activity: "Gopalan Arcade, RR Nagar" },
@@ -352,6 +482,7 @@ export const allTrips: Trip[] = [
     ],
     location: "60km from Bangalore",
     category: "one-day",
+    is_featured: false,
     itinerary: [
       { time: "Day 0", activity: "Departure from Bengaluru" },
       { time: "10:45 PM", activity: "Tin Factory (Benniganahalli Metro)" },
@@ -404,10 +535,10 @@ export const allTrips: Trip[] = [
       "Opp. Kalamandir, Marathahalli - 11:05 PM",
       "Akme Harmony, Bellandur - 11:20 PM",
       "Silk Board Bus Stop - 11:35 PM",
-      "Udupi Garden Signal, BTM - 11:50 PM",
-      "Banashankari Bus Stop - 12:05 AM",
-      "Gopalan Arcade Mall, RR Nagar - 12:35 AM",
-      "Guraguntepalya Signal, Yeshwanthpur - 12:55 AM",
+      { location: "Udupi Garden Signal, BTM", time: "11:50 PM" },
+      { location: "Banashankari Bus Stop", time: "12:05 AM" },
+      { location: "Gopalan Arcade Mall, RR Nagar", time: "12:35 AM" },
+      { location: "Guraguntepalya Signal, Yeshwanthpur", time: "12:55 AM" },
     ],
     cancellationPolicy: "Free cancellation up to 24 hours before the trip.",
     thingsToCarry: [
@@ -446,6 +577,7 @@ export const allTrips: Trip[] = [
     ],
     location: "125km from Bangalore",
     category: "one-day",
+    is_featured: false,
     itinerary: [
       { time: "Day 0", activity: "Departure from Bengaluru" },
       { time: "11:15 PM", activity: "Benniganahalli Metro Station, Tin Factory" },
@@ -505,11 +637,11 @@ export const allTrips: Trip[] = [
       "Kalamandir, Marathahalli - 11:35 PM",
       "Akme Harmony, Bellandur - 11:50 PM",
       "Silkboard Bus Stop - 12:05 AM",
-      "Udupi Garden Signal, BTM - 12:15 AM",
-      "Banashankari Bus Stop - 12:30 AM",
-      "Kathriguppe Circle - 12:45 AM",
-      "Gopalan Arcade Mall, RR Nagar - 01:00 AM",
-      "Kengeri Bus Stop - 01:15 AM",
+      { location: "Udupi Garden Signal, BTM", time: "12:15 AM" },
+      { location: "Banashankari Bus Stop", time: "12:30 AM" },
+      { location: "Kathriguppe Circle", time: "12:45 AM" },
+      { location: "Gopalan Arcade Mall, RR Nagar", time: "01:00 AM" },
+      { location: "Kengeri Bus Stop", time: "01:15 AM" },
     ],
     cancellationPolicy: "Free cancellation up to 24 hours before the trip.",
     thingsToCarry: [
@@ -548,6 +680,7 @@ export const allTrips: Trip[] = [
     ],
     location: "80km from Bangalore",
     category: "one-day",
+    is_featured: false,
     itinerary: [
       { time: "08:00 AM", activity: "BTM (Near A2B)" },
       { time: "08:10 AM", activity: "Silkboard (Udupi Upachar)" },
@@ -629,6 +762,7 @@ export const allTrips: Trip[] = [
     highlights: ["Mandalpatti View Point", "Abbey Falls", "Raja Seat", "Harangi Elephant Camp", "Namdroling Monastery"],
     location: "250km from Bangalore",
     category: "two-day",
+    is_featured: true,
     itinerary: [
       { time: "Day 0 – 10:00 PM", activity: "Begin Your Scenic Journey to the Hills of Kodagu" },
       { time: "10:00 PM", activity: "Start from Banashankari" },
@@ -747,6 +881,7 @@ export const allTrips: Trip[] = [
     ],
     location: "240km from Bangalore",
     category: "two-day",
+    is_featured: false,
     itinerary: [
       { time: "Day 0 – 10:00 PM", activity: "Begin Your Scenic Journey to the Chikmagalur" },
       { time: "10:00 PM", activity: "Start from Banashankari bus stop" },
@@ -859,6 +994,7 @@ export const allTrips: Trip[] = [
     ],
     location: "480km from Bangalore",
     category: "two-day",
+    is_featured: true,
     itinerary: [
       { time: "Day 0 – 08:00 PM", activity: "Begin Your Scenic Journey to the Gokarna" },
       { time: "08:00 PM", activity: "Start from Banashankari bus stop" },
@@ -896,7 +1032,7 @@ export const allTrips: Trip[] = [
       "Basic First Aid Kit",
     ],
     excluded: [
-      "Optional Activities",
+      "Optional Activities (Jeep ride, elephant interaction)",
       "Personal Expenses: Snacks, Bottled Water, Additional Meals",
       "Insurance of any kind",
       "Anything not listed in the 'Inclusions'",
@@ -971,6 +1107,7 @@ export const allTrips: Trip[] = [
     ],
     location: "300km from Bangalore",
     category: "two-day",
+    is_featured: false,
     itinerary: [
       { time: "Day 0 – 08:00 PM", activity: "Begin Your Scenic Journey to the Netravathi" },
       { time: "08:00 PM", activity: "Start from Banashankari bus stop" },
@@ -1082,6 +1219,7 @@ export const allTrips: Trip[] = [
     ],
     location: "320km from Bangalore",
     category: "two-day",
+    is_featured: false,
     itinerary: [
       { time: "Day 0 – 08:00 PM", activity: "Begin Your Scenic Journey to the Bandaje Trek" },
       { time: "08:00 PM", activity: "Start from Banashankari bus stop" },
@@ -1200,6 +1338,7 @@ export const allTrips: Trip[] = [
     ],
     location: "270km from Bangalore",
     category: "two-day",
+    is_featured: false,
     itinerary: [
       { time: "Day 0 – 10:00 PM", activity: "Begin Your Scenic Journey to Ooty" },
       { time: "10:00 PM", activity: "Start from Banashankari" },
@@ -1315,6 +1454,7 @@ export const allTrips: Trip[] = [
     ],
     location: "335km from Bangalore",
     category: "two-day",
+    is_featured: false,
     itinerary: [
       { time: "Day 0 – 08:00 PM", activity: "Begin Your Scenic Journey to the Kudremukh Trek" },
       { time: "08:00 PM", activity: "Start from Banashankari bus stop" },
@@ -1430,6 +1570,7 @@ export const allTrips: Trip[] = [
     ],
     location: "280km from Bangalore",
     category: "two-day",
+    is_featured: false,
     itinerary: [
       { time: "Day 0 – 10:00 PM", activity: "Begin Your Scenic Journey to the Wayanad" },
       { time: "10:00 PM", activity: "Start from Banashankari" },
@@ -1546,6 +1687,7 @@ export const allTrips: Trip[] = [
     ],
     location: "450km from Bangalore",
     category: "two-day",
+    is_featured: false,
     itinerary: [
       { time: "Day 0 – 08:00 PM", activity: "Begin Your Scenic Journey to the Dandeli" },
       { time: "08:00 PM", activity: "Start from Banashankari bus stop" },

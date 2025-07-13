@@ -22,7 +22,7 @@ import { TestimonialsSection } from "@/components/testimonials-section"
 import { StatsSection } from "@/components/stats-section"
 import { EnhancedHeroSection } from "@/components/enhanced-hero-section"
 
-export default function HomePage() {
+export default async function HomePage() {
   const whyChooseUs = [
     {
       icon: Users,

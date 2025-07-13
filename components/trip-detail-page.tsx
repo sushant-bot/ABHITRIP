@@ -82,7 +82,7 @@ export function TripDetailPage({ trip }: TripDetailPageProps) {
     }
   }
 
-  const tabsToShow = ["itinerary", "inclusions", "faq"]
+  const tabsToShow = ["itinerary", "inclusions"]
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
@@ -281,64 +281,105 @@ export function TripDetailPage({ trip }: TripDetailPageProps) {
             </section>
 
             {/* Itinerary */}
-            <section className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+            <section className="bg-white rounded-xl shadow-lg p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300 border border-gray-100">
               <div className="flex items-center mb-4">
                 <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-purple-500 to-indigo-600 rounded-full mr-3 shadow-md">
                   <Calendar className="h-5 w-5 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-indigo-700 bg-clip-text text-transparent">Detailed Itinerary</h2>
+                <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-600 to-indigo-700 bg-clip-text text-transparent">Detailed Itinerary</h2>
               </div>
               <div className="mb-6 bg-indigo-50 p-4 rounded-lg border border-indigo-100 transform hover:scale-[1.01] transition-transform duration-300">
-                <p className="text-indigo-800 font-medium flex items-center">
-                  <Calendar className="h-5 w-5 mr-2 text-indigo-600" />
+                <p className="text-indigo-800 font-medium flex items-center text-sm sm:text-base">
+                  <Calendar className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-indigo-600 flex-shrink-0" />
                   Your complete journey breakdown with activities, timings, and locations.
                 </p>
               </div>
               
-              <div className="space-y-8">
-                {trip.itinerary.map((item, index) => (
-                  <div key={index} className="relative">
-                    {index < trip.itinerary.length - 1 && (
-                      <div className="absolute top-8 bottom-0 left-6 w-0.5 bg-gradient-to-b from-blue-400 to-indigo-600 ml-0.5"></div>
-                    )}
-                    <div className="flex items-start">
-                      <div className="z-10 flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 shadow-md ring-2 ring-indigo-100 flex-shrink-0">
-                        <span className="text-xs font-bold text-white">{index + 1}</span>
-                      </div>
-                      <div className="ml-4 flex-1">
-                        <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-300 border border-blue-100 transform hover:translate-y-[-2px] transition-transform duration-300">
-                          <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                            {item.time && (
-                              <span className="text-indigo-700 font-semibold bg-indigo-50 px-3 py-1 rounded text-sm">{item.time}</span>
-                            )}
-                            {item.title && (
-                              <span className="font-semibold text-gray-800">{item.title}</span>
-                            )}
-                          </div>
-                          {item.activity && (
-                            <p className="mt-2 text-gray-700">{item.activity}</p>
-                          )}
-                          {item.activities && item.activities.length > 0 && (
-                            <ul className="mt-2 space-y-1">
-                              {item.activities.map((activity, actIndex) => (
-                                <li key={actIndex} className="text-gray-700 flex items-start">
-                                  <span className="w-2 h-2 bg-indigo-400 rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                                  {activity}
-                                </li>
-                              ))}
-                            </ul>
-                          )}
-                          {item.meals && item.meals.length > 0 && (
-                            <div className="mt-2">
-                              <span className="text-sm font-medium text-emerald-600">Meals: </span>
-                              <span className="text-gray-700">{item.meals.join(", ")}</span>
-                            </div>
-                          )}
+              <div className="space-y-8 sm:space-y-12">
+                {(() => {
+                  // Group itinerary items by day
+                  const groupedByDay = trip.itinerary.reduce((acc, item, index) => {
+                    const dayNumber = item.day || (Math.floor(index / Math.ceil(trip.itinerary.length / (trip.category === 'two-day' ? 2 : 1))) + 1);
+                    if (!acc[dayNumber]) {
+                      acc[dayNumber] = [];
+                    }
+                    acc[dayNumber].push({ ...item, originalIndex: index });
+                    return acc;
+                  }, {} as Record<number, any[]>);
+
+                  return Object.entries(groupedByDay)
+                    .sort(([a], [b]) => parseInt(a) - parseInt(b)) // Sort days numerically (0, 1, 2)
+                    .map(([day, dayItems]) => (
+                    <div key={day} className="relative">
+                      {/* Day Header */}
+                      <div className="flex items-center mb-6 sm:mb-8">
+                        <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-purple-600 to-indigo-700 shadow-lg mr-4 ring-4 ring-purple-100">
+                          <span className="text-sm sm:text-lg font-bold text-white">
+                            {day === '0' ? 'Day 0' : `Day ${day}`}
+                          </span>
                         </div>
+                        <div className="flex-1 h-0.5 bg-gradient-to-r from-purple-300 to-indigo-300 rounded-full"></div>
+                      </div>
+                      
+                      {/* Day Activities */}
+                      <div className="ml-4 sm:ml-8 space-y-4 sm:space-y-6 relative">
+                        {/* Vertical line for activities within a day */}
+                        <div className="absolute left-2 sm:left-4 top-4 bottom-4 w-0.5 bg-gradient-to-b from-blue-200 to-indigo-200"></div>
+                        
+                        {dayItems.map((item, itemIndex) => (
+                          <div key={itemIndex} className="relative">
+                            <div className="flex items-start">
+                              <div className="z-10 flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 shadow-md ring-2 ring-blue-100 flex-shrink-0">
+                                <span className="text-xs font-bold text-white">{itemIndex + 1}</span>
+                              </div>
+                              <div className="ml-3 sm:ml-4 flex-1">
+                                <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg p-3 sm:p-4 shadow-sm hover:shadow-md transition-all duration-300 border border-blue-100 transform hover:translate-y-[-2px]">
+                                  <div className="flex flex-col gap-2 sm:gap-3">
+                                    {item.time && (
+                                      <div className="flex items-center">
+                                        <Clock className="h-3 w-3 sm:h-4 sm:w-4 text-indigo-600 mr-2 flex-shrink-0" />
+                                        <span className="text-indigo-700 font-semibold bg-indigo-100 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm">
+                                          {item.time}
+                                        </span>
+                                      </div>
+                                    )}
+                                    {item.title && (
+                                      <h4 className="font-semibold text-gray-800 text-sm sm:text-base">{item.title}</h4>
+                                    )}
+                                    {item.activity && (
+                                      <p className="text-gray-700 text-sm sm:text-base leading-relaxed">{item.activity}</p>
+                                    )}
+                                    {item.activities && item.activities.length > 0 && (
+                                      <div className="mt-2">
+                                        <p className="text-xs sm:text-sm font-medium text-gray-600 mb-2">Activities:</p>
+                                        <ul className="space-y-1 sm:space-y-2">
+                                          {item.activities.map((activity: string, actIndex: number) => (
+                                            <li key={actIndex} className="text-gray-700 flex items-start text-sm">
+                                              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-indigo-400 rounded-full mt-2 mr-2 sm:mr-3 flex-shrink-0"></span>
+                                              {activity}
+                                            </li>
+                                          ))}
+                                        </ul>
+                                      </div>
+                                    )}
+                                    {item.meals && item.meals.length > 0 && (
+                                      <div className="mt-2 p-2 sm:p-3 bg-emerald-50 rounded-lg border border-emerald-100">
+                                        <span className="text-xs sm:text-sm font-medium text-emerald-700 flex items-center">
+                                          🍽️ Meals Included: 
+                                        </span>
+                                        <span className="text-gray-700 text-sm ml-1">{item.meals.join(", ")}</span>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ));
+                })()}
               </div>
             </section>
             
@@ -479,36 +520,6 @@ export function TripDetailPage({ trip }: TripDetailPageProps) {
                   </ul>
                 </div>
               </div>
-            </section>
-
-            {/* FAQ Section */}
-            <section className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-              <div className="flex items-center mb-4">
-                <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-purple-500 to-pink-600 rounded-full mr-3 shadow-md">
-                  <MessageCircle className="h-5 w-5 text-white" />
-                </div>
-                <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-700 bg-clip-text text-transparent">Frequently Asked Questions</h2>
-              </div>
-              
-              <div className="mb-6 bg-purple-50 p-4 rounded-lg border border-purple-100 transform hover:scale-[1.01] transition-transform duration-300">
-                <p className="text-purple-800 font-medium flex items-center">
-                  <MessageCircle className="h-5 w-5 mr-2 text-purple-600" />
-                  Common questions and answers about this trip.
-                </p>
-              </div>
-
-              <Accordion type="single" collapsible className="w-full">
-                {trip.faqs.map((faq, index) => (
-                  <AccordionItem key={index} value={`item-${index}`} className="border border-purple-100 rounded-lg mb-3 px-4">
-                    <AccordionTrigger className="text-left hover:text-purple-600 transition-colors duration-300">
-                      {faq.question}
-                    </AccordionTrigger>
-                    <AccordionContent className="text-gray-700 bg-purple-50 -mx-4 -mb-4 px-4 pb-4 rounded-b-lg">
-                      {faq.answer}
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
             </section>
 
             {/* Cancellation Policy */}

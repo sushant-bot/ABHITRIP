@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import { getTripBySlug, allTrips } from "@/lib/trips-data"
+import { getTripBySlug, getTripBySlugFromDB, allTrips } from "@/lib/trips-data"
 import { TripDetailPage } from "@/components/trip-detail-page"
 
 interface TripPageProps {
@@ -15,7 +15,11 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: TripPageProps) {
-  const trip = getTripBySlug(params.slug)
+  // Try database first, then fallback to static data
+  let trip = await getTripBySlugFromDB(params.slug)
+  if (!trip) {
+    trip = getTripBySlug(params.slug) || null
+  }
 
   if (!trip) {
     return {
@@ -34,8 +38,12 @@ export async function generateMetadata({ params }: TripPageProps) {
   }
 }
 
-export default function TripPage({ params }: TripPageProps) {
-  const trip = getTripBySlug(params.slug)
+export default async function TripPage({ params }: TripPageProps) {
+  // Try database first, then fallback to static data
+  let trip = await getTripBySlugFromDB(params.slug)
+  if (!trip) {
+    trip = getTripBySlug(params.slug) || null
+  }
 
   if (!trip) {
     notFound()
