@@ -42,20 +42,23 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
                 <LayoutDashboard className="h-5 w-5 text-white" />
               </div>
-              <h1 className="text-xl font-bold text-gray-900">Abhi Trip Admin</h1>
+              <h1 className="text-lg sm:text-xl font-bold text-gray-900">Abhi Trip Admin</h1>
             </div>
-            <div className="flex items-center gap-4">
-              <Button variant="outline" size="sm">
+            <div className="flex items-center gap-2 sm:gap-4">
+              <Button variant="outline" size="sm" className="hidden sm:flex">
                 <Settings className="h-4 w-4 mr-2" />
                 Settings
               </Button>
+              <Button variant="outline" size="sm" className="sm:hidden" title="Settings">
+                <Settings className="h-4 w-4" />
+              </Button>
               <Button variant="outline" size="sm" onClick={onLogout}>
-                <LogOut className="h-4 w-4 mr-2" />
-                Logout
+                <LogOut className="h-4 w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Logout</span>
               </Button>
             </div>
           </div>
@@ -68,24 +71,24 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
           <TabsList className="grid w-full grid-cols-3 bg-white shadow-sm">
             <TabsTrigger 
               value="overview" 
-              className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white"
+              className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white"
             >
-              <BarChart3 className="h-4 w-4" />
-              Overview
+              <BarChart3 className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="hidden xs:inline">Overview</span>
             </TabsTrigger>
             <TabsTrigger 
               value="trips"
-              className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-600 data-[state=active]:to-emerald-600 data-[state=active]:text-white"
+              className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-600 data-[state=active]:to-emerald-600 data-[state=active]:text-white"
             >
-              <MapPin className="h-4 w-4" />
-              Trips
+              <MapPin className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="hidden xs:inline">Trips</span>
             </TabsTrigger>
             <TabsTrigger 
               value="testimonials"
-              className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-600 data-[state=active]:to-pink-600 data-[state=active]:text-white"
+              className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-600 data-[state=active]:to-pink-600 data-[state=active]:text-white"
             >
-              <MessageSquare className="h-4 w-4" />
-              Testimonials
+              <MessageSquare className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="hidden xs:inline">Reviews</span>
             </TabsTrigger>
           </TabsList>
 
@@ -94,7 +97,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Dashboard Overview</h2>
               
               {/* Stats Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
                 <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Total Trips</CardTitle>
@@ -149,14 +152,14 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <Button 
                       onClick={() => setActiveTab("trips")}
                       className="h-16 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
                     >
                       <div className="flex flex-col items-center gap-2">
                         <MapPin className="h-5 w-5" />
-                        <span>Manage Trips</span>
+                        <span className="text-sm sm:text-base">Manage Trips</span>
                       </div>
                     </Button>
                     <Button 
@@ -165,7 +168,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                     >
                       <div className="flex flex-col items-center gap-2">
                         <MessageSquare className="h-5 w-5" />
-                        <span>Manage Testimonials</span>
+                        <span className="text-sm sm:text-base">Manage Reviews</span>
                       </div>
                     </Button>
                   </div>

@@ -38,12 +38,12 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="text-center bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-lg">
-          <CardTitle className="text-2xl font-bold flex items-center justify-center gap-2">
-            <Lock className="h-6 w-6" />
+          <CardTitle className="text-xl sm:text-2xl font-bold flex items-center justify-center gap-2">
+            <Lock className="h-5 w-5 sm:h-6 sm:w-6" />
             Admin Login
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-6">
+        <CardContent className="p-4 sm:p-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <Label htmlFor="username" className="flex items-center gap-2 mb-2">

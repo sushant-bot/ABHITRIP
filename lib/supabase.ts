@@ -4,8 +4,55 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://demo.supabase.co'
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'demo-key'
 
-// Mock query builder for demo mode
-const createMockQueryBuilder = () => {
+// Create real or mock client based on environment
+const createSupabaseClient = () => {
+  // If we have real environment variables, create a real client
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return createClient(supabaseUrl, supabaseAnonKey)
+  }
+  
+  // Otherwise, create a mock client for development
+  return createMockClient()
+}
+
+function createMockClient() {
+  // Mock query builder for demo mode
+  const createMockQueryBuilder = () => {
+    const mockResult = { data: [], error: null }
+    
+    return {
+      select: () => createMockQueryBuilder(),
+      eq: () => createMockQueryBuilder(),
+      neq: () => createMockQueryBuilder(),
+      gt: () => createMockQueryBuilder(),
+      gte: () => createMockQueryBuilder(),
+      lt: () => createMockQueryBuilder(),
+      lte: () => createMockQueryBuilder(),
+      like: () => createMockQueryBuilder(),
+      ilike: () => createMockQueryBuilder(),
+      is: () => createMockQueryBuilder(),
+      in: () => createMockQueryBuilder(),
+      contains: () => createMockQueryBuilder(),
+      containedBy: () => createMockQueryBuilder(),
+      rangeGt: () => createMockQueryBuilder(),
+      rangeGte: () => createMockQueryBuilder(),
+      rangeLt: () => createMockQueryBuilder(),
+      rangeLte: () => createMockQueryBuilder(),
+      rangeAdjacent: () => createMockQueryBuilder(),
+      overlaps: () => createMockQueryBuilder(),
+      textSearch: () => createMockQueryBuilder(),
+      match: () => createMockQueryBuilder(),
+      not: () => createMockQueryBuilder(),
+      or: () => createMockQueryBuilder(),
+      filter: () => createMockQueryBuilder(),
+      order: () => createMockQueryBuilder(),
+      limit: () => createMockQueryBuilder(),
+      range: () => createMockQueryBuilder(),
+      single: async () => ({ data: null, error: null }),
+      then: (onFulfilled: any) => Promise.resolve(mockResult).then(onFulfilled)
+    }
+  }
+  
   const mockResult = { data: [], error: null }
   
   const builder = {
@@ -140,3 +187,7 @@ export interface DbTestimonial {
   created_at: string
   updated_at: string
 }
+function createMockQueryBuilder() {
+    throw new Error('Function not implemented.')
+}
+

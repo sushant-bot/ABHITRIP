@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch"
 import { Badge } from "@/components/ui/badge"
 import { Plus, Edit, Trash2, Save, X, MapPin, Clock, Users, Star, Upload, Image as ImageIcon } from "lucide-react"
-import { supabase, type DbTrip } from "@/lib/supabase"
+import { supabase, type DbTrip } from "@/lib/supabase-client"
 import { allTrips } from "@/lib/trips-data"
 import Image from "next/image"
 
@@ -83,7 +83,8 @@ export function TripManagement() {
     const checkDemoMode = async () => {
       try {
         // Try a simple select operation to test if Supabase is working
-        const testResult = await supabase.from('trips').select('id').limit(1)
+        const testQuery = supabase?.from('trips')
+        const testResult = testQuery ? await testQuery.select('id').limit(1) : null
         
         console.log('Supabase test result:', testResult)
         
@@ -114,8 +115,36 @@ export function TripManagement() {
   const loadTrips = async () => {
     try {
       console.log('Loading trips from database...')
-      const { data, error } = await supabase
-        .from('trips')
+      
+      // Check if supabase client is available
+      if (!supabase) {
+        console.log('Supabase client not available, using fallback data')
+        setTrips(allTrips.map(trip => ({
+          ...trip,
+          id: trip.slug || '',
+          slug: trip.slug,
+          detailed_description: trip.detailedDescription,
+          group_size: trip.groupSize,
+          original_price: trip.originalPrice || trip.price,
+          pickup_points: trip.pickupPoints.map(p => 
+            typeof p === 'string' ? p : `${p.location} - ${p.time}`
+          ),
+          things_to_carry: trip.thingsToCarry,
+          cancellation_policy: trip.cancellationPolicy,
+          itinerary: trip.itinerary || [{ day: 0, time: '', title: '', activity: '' }],
+          is_featured: trip.is_featured || false,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        })) as DbTrip[])
+        return
+      }
+
+      const tripsQuery = supabase?.from('trips')
+      if (!tripsQuery) {
+        throw new Error('Unable to create trips query')
+      }
+
+      const { data, error } = await tripsQuery
         .select('*')
         .order('created_at', { ascending: false })
 
@@ -128,9 +157,13 @@ export function TripManagement() {
         setTrips(allTrips.map(trip => ({
           ...trip,
           id: trip.slug || '',
+          slug: trip.slug,
           detailed_description: trip.detailedDescription,
           group_size: trip.groupSize,
-          pickup_points: trip.pickupPoints,
+          original_price: trip.originalPrice || trip.price,
+          pickup_points: trip.pickupPoints.map(p => 
+            typeof p === 'string' ? p : `${p.location} - ${p.time}`
+          ),
           things_to_carry: trip.thingsToCarry,
           cancellation_policy: trip.cancellationPolicy,
           itinerary: trip.itinerary || [{ day: 0, time: '', title: '', activity: '' }],
@@ -142,16 +175,26 @@ export function TripManagement() {
       }
 
       // Process database data to ensure compatibility
-      const processedTrips = (data || []).map(trip => ({
-        ...trip,
-        itinerary: trip.itinerary || [{ day: 0, time: '', title: '', activity: '' }],
-        highlights: Array.isArray(trip.highlights) ? trip.highlights : [],
-        pickup_points: Array.isArray(trip.pickup_points) ? trip.pickup_points : [],
-        included: Array.isArray(trip.included) ? trip.included : [],
-        excluded: Array.isArray(trip.excluded) ? trip.excluded : [],
-        things_to_carry: Array.isArray(trip.things_to_carry) ? trip.things_to_carry : [],
-        is_featured: trip.is_featured || false
-      }))
+    interface ProcessedTrip extends DbTrip {
+      itinerary: Array<{ day?: number; time?: string; title?: string; activity?: string; }>;
+      highlights: string[];
+      pickup_points: string[];
+      included: string[];
+      excluded: string[];
+      things_to_carry: string[];
+      is_featured: boolean;
+    }
+
+    const processedTrips: ProcessedTrip[] = (data || []).map((trip: DbTrip): ProcessedTrip => ({
+      ...trip,
+      itinerary: trip.itinerary || [{ day: 0, time: '', title: '', activity: '' }],
+      highlights: Array.isArray(trip.highlights) ? trip.highlights : [],
+      pickup_points: Array.isArray(trip.pickup_points) ? trip.pickup_points : [],
+      included: Array.isArray(trip.included) ? trip.included : [],
+      excluded: Array.isArray(trip.excluded) ? trip.excluded : [],
+      things_to_carry: Array.isArray(trip.things_to_carry) ? trip.things_to_carry : [],
+      is_featured: trip.is_featured || false
+    }))
 
       console.log('Processed trips:', processedTrips.length, 'trips loaded')
       setTrips(processedTrips)
@@ -162,9 +205,13 @@ export function TripManagement() {
       setTrips(allTrips.map(trip => ({
         ...trip,
         id: trip.slug || '',
+        slug: trip.slug,
         detailed_description: trip.detailedDescription,
         group_size: trip.groupSize,
-        pickup_points: trip.pickupPoints,
+        original_price: trip.originalPrice || trip.price,
+        pickup_points: trip.pickupPoints.map(p => 
+          typeof p === 'string' ? p : `${p.location} - ${p.time}`
+        ),
         things_to_carry: trip.thingsToCarry,
         cancellation_policy: trip.cancellationPolicy,
         itinerary: trip.itinerary || [{ day: 0, time: '', title: '', activity: '' }],
@@ -332,16 +379,20 @@ export function TripManagement() {
       if (editingId) {
         // Update existing trip
         console.log('Updating trip with ID:', editingId)
-        result = await supabase
-          .from('trips')
-          .update({ ...tripData, updated_at: new Date().toISOString() })
-          .eq('id', editingId)
+        const updateQuery = supabase?.from('trips')
+        if (updateQuery) {
+          result = await updateQuery
+            .update({ ...tripData, updated_at: new Date().toISOString() })
+            .eq('id', editingId)
+        }
       } else {
         // Create new trip
         console.log('Creating new trip')
-        result = await supabase
-          .from('trips')
-          .insert([{ ...tripData, created_at: new Date().toISOString(), updated_at: new Date().toISOString() }])
+        const insertQuery = supabase?.from('trips')
+        if (insertQuery) {
+          result = await insertQuery
+            .insert([{ ...tripData, created_at: new Date().toISOString(), updated_at: new Date().toISOString() }])
+        }
       }
 
       console.log('Supabase operation result:', result)
@@ -382,7 +433,11 @@ export function TripManagement() {
       category: trip.category,
       image: trip.image,
       highlights: Array.isArray(trip.highlights) ? trip.highlights : [trip.highlights].filter(Boolean),
-      pickup_points: Array.isArray(trip.pickup_points) ? trip.pickup_points.map(p => typeof p === 'string' ? p : `${p.location} - ${p.time}`) : [],
+      pickup_points: Array.isArray(trip.pickup_points) 
+        ? trip.pickup_points.map(p => 
+            typeof p === 'string' ? p : `${(p as any).location} - ${(p as any).time}`
+          ) 
+        : [],
       included: Array.isArray(trip.included) ? trip.included : [],
       excluded: Array.isArray(trip.excluded) ? trip.excluded : [],
       things_to_carry: Array.isArray(trip.things_to_carry) ? trip.things_to_carry : [],
@@ -405,12 +460,14 @@ export function TripManagement() {
         return
       }
 
-      const { error } = await supabase
-        .from('trips')
-        .delete()
-        .eq('id', id)
+      const deleteQuery = supabase?.from('trips')
+      if (deleteQuery) {
+        const { error } = await deleteQuery
+          .delete()
+          .eq('id', id)
 
-      if (error) throw error
+        if (error) throw error
+      }
       loadTrips()
     } catch (error) {
       console.error('Error deleting trip:', error)
@@ -489,8 +546,13 @@ export function TripManagement() {
       console.log('Starting migration of existing trips...')
       
       // Get all trips that have NULL or empty itinerary
-      const { data: tripsToMigrate, error: selectError } = await supabase
-        .from('trips')
+      const migrateQuery = supabase?.from('trips')
+      if (!migrateQuery) {
+        alert('Migration not available - Supabase client not initialized')
+        return
+      }
+      
+      const { data: tripsToMigrate, error: selectError } = await migrateQuery
         .select('*')
         .or('itinerary.is.null,itinerary.eq.[]')
       
@@ -520,8 +582,13 @@ export function TripManagement() {
           )
         }
 
-        const { error: updateError } = await supabase
-          .from('trips')
+        const updateQuery = supabase?.from('trips')
+        if (!updateQuery) {
+          console.error('Cannot update trip - Supabase client not available')
+          continue
+        }
+        
+        const { error: updateError } = await updateQuery
           .update({ itinerary: defaultItinerary })
           .eq('id', trip.id)
 
@@ -547,8 +614,14 @@ export function TripManagement() {
       console.log('Testing Supabase connection...')
       
       // First, try to list tables or get database info
-      const { data, error } = await supabase
-        .from('trips')
+      const testQuery = supabase?.from('trips')
+      if (!testQuery) {
+        console.error('Supabase client not available')
+        alert('Supabase client not available')
+        return
+      }
+      
+      const { data, error } = await testQuery
         .select('*')
         .limit(1)
       
@@ -588,13 +661,14 @@ export function TripManagement() {
         </div>
       )}
       
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Trip Management</h2>
-        <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+        <h2 className="text-xl sm:text-2xl font-bold">Trip Management</h2>
+        <div className="flex flex-wrap gap-2">
           <Button
             onClick={testSupabaseConnection}
             variant="outline"
-            className="border-blue-500 text-blue-600 hover:bg-blue-50"
+            size="sm"
+            className="border-blue-500 text-blue-600 hover:bg-blue-50 text-xs sm:text-sm"
           >
             Test Connection
           </Button>
@@ -604,14 +678,16 @@ export function TripManagement() {
               loadTrips()
             }}
             variant="outline"
-            className="border-green-500 text-green-600 hover:bg-green-50"
+            size="sm"
+            className="border-green-500 text-green-600 hover:bg-green-50 text-xs sm:text-sm"
           >
             Refresh Data
           </Button>
           <Button
             onClick={migrateExistingTrips}
             variant="outline"
-            className="border-orange-500 text-orange-600 hover:bg-orange-50"
+            size="sm"
+            className="border-orange-500 text-orange-600 hover:bg-orange-50 text-xs sm:text-sm hidden sm:inline-flex"
           >
             Migrate Old Data
           </Button>
@@ -622,9 +698,10 @@ export function TripManagement() {
               setEditingId(null)
               setIsEditing(true)
             }}
-            className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
+            size="sm"
+            className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-xs sm:text-sm"
           >
-            <Plus className="h-4 w-4 mr-2" />
+            <Plus className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
             Add New Trip
           </Button>
         </div>
@@ -635,8 +712,8 @@ export function TripManagement() {
           <CardHeader className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
             <CardTitle>{editingId ? 'Edit Trip' : 'Add New Trip'}</CardTitle>
           </CardHeader>
-          <CardContent className="p-6 space-y-4 max-h-96 overflow-y-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <CardContent className="p-4 sm:p-6 space-y-4 max-h-96 overflow-y-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
                 <Label htmlFor="title">Title *</Label>
                 <Input
@@ -695,7 +772,7 @@ export function TripManagement() {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
                 <Label htmlFor="location">Location *</Label>
                 <Input
@@ -725,7 +802,7 @@ export function TripManagement() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <div>
                 <Label htmlFor="price">Price *</Label>
                 <Input
@@ -833,7 +910,7 @@ export function TripManagement() {
                     </Button>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                       <Label htmlFor={`day-${index}`}>Day</Label>
                       <Select
@@ -970,11 +1047,11 @@ export function TripManagement() {
               </Button>
             </div>
 
-            <div className="flex gap-2 pt-4">
+            <div className="flex flex-col sm:flex-row gap-2 pt-4">
               <Button
                 onClick={handleSave}
                 disabled={isLoading}
-                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
+                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 flex-1 sm:flex-none"
               >
                 <Save className="h-4 w-4 mr-2" />
                 {isLoading ? 'Saving...' : 'Save Trip'}
@@ -987,6 +1064,7 @@ export function TripManagement() {
                   setFormData(initialFormData)
                   clearImageSelection()
                 }}
+                className="flex-1 sm:flex-none"
               >
                 <X className="h-4 w-4 mr-2" />
                 Cancel
@@ -1077,7 +1155,7 @@ export function TripManagement() {
         </Card>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {trips.map((trip) => (
           <Card key={trip.id} className="shadow-lg hover:shadow-xl transition-shadow overflow-hidden">
             {/* Trip Image */}
@@ -1117,12 +1195,14 @@ export function TripManagement() {
                     <span className="text-sm text-gray-600">{trip.reviews} reviews</span>
                   </div>
                 </div>
-                <div className="flex gap-1">
-                  <Button variant="outline" size="sm" onClick={() => handleEdit(trip)}>
-                    <Edit className="h-4 w-4" />
+                <div className="flex flex-col sm:flex-row gap-1">
+                  <Button variant="outline" size="sm" onClick={() => handleEdit(trip)} className="w-full sm:w-auto">
+                    <Edit className="h-4 w-4 mr-1 sm:mr-0" />
+                    <span className="sm:hidden">Edit</span>
                   </Button>
-                  <Button variant="outline" size="sm" onClick={() => handleDelete(trip.id)}>
-                    <Trash2 className="h-4 w-4" />
+                  <Button variant="outline" size="sm" onClick={() => handleDelete(trip.id)} className="w-full sm:w-auto">
+                    <Trash2 className="h-4 w-4 mr-1 sm:mr-0" />
+                    <span className="sm:hidden">Delete</span>
                   </Button>
                 </div>
               </div>
