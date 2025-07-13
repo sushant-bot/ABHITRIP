@@ -3,10 +3,13 @@ import { getTripBySlug, getTripBySlugFromDB, allTrips } from "@/lib/trips-data"
 import { TripDetailPage } from "@/components/trip-detail-page"
 
 interface TripPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
+
+// Use ISR to revalidate pages when data changes
+export const revalidate = 0 // Revalidate on every request in production
 
 export async function generateStaticParams() {
   return allTrips.map((trip) => ({
@@ -15,10 +18,11 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: TripPageProps) {
+  const { slug } = await params
   // Try database first, then fallback to static data
-  let trip = await getTripBySlugFromDB(params.slug)
+  let trip = await getTripBySlugFromDB(slug)
   if (!trip) {
-    trip = getTripBySlug(params.slug) || null
+    trip = getTripBySlug(slug) || null
   }
 
   if (!trip) {
@@ -39,10 +43,11 @@ export async function generateMetadata({ params }: TripPageProps) {
 }
 
 export default async function TripPage({ params }: TripPageProps) {
+  const { slug } = await params
   // Try database first, then fallback to static data
-  let trip = await getTripBySlugFromDB(params.slug)
+  let trip = await getTripBySlugFromDB(slug)
   if (!trip) {
-    trip = getTripBySlug(params.slug) || null
+    trip = getTripBySlug(slug) || null
   }
 
   if (!trip) {

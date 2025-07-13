@@ -14,14 +14,16 @@ interface TestimonialFormData {
   name: string
   trip_title: string
   rating: number
-  content: string
+  comment: string
+  image: string
 }
 
 const initialFormData: TestimonialFormData = {
   name: '',
   trip_title: '',
   rating: 5,
-  content: ''
+  comment: '',
+  image: ''
 }
 
 export function TestimonialManagement() {
@@ -32,6 +34,9 @@ export function TestimonialManagement() {
   const [isLoading, setIsLoading] = useState(false)
   const [isDemoMode, setIsDemoMode] = useState(false)
 
+  console.log('TestimonialManagement render - testimonials count:', testimonials.length)
+  console.log('Current testimonials:', testimonials)
+
   useEffect(() => {
     // Check if we're in demo mode
     const isDemo = !process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL === 'your_supabase_project_url_here'
@@ -41,6 +46,33 @@ export function TestimonialManagement() {
 
   const loadTestimonials = async () => {
     try {
+      console.log('Loading testimonials from database...')
+      
+      if (isDemoMode) {
+        console.log('Demo mode: Using static testimonials')
+        setTestimonials([
+          {
+            id: '1',
+            name: 'Rajesh Kumar',
+            trip_title: 'Nandi Hills Adventure',
+            rating: 5,
+            comment: 'Amazing experience! The sunrise view was breathtaking and the trek was well organized.',
+            image: '/placeholder-user.jpg',
+            created_at: new Date().toISOString()
+          },
+          {
+            id: '2',
+            name: 'Priya Sharma',
+            trip_title: 'Skandagiri Night Trek',
+            rating: 4,
+            comment: 'Great adventure under the stars. Well planned trip with experienced guides.',
+            image: '/placeholder-user.jpg',
+            created_at: new Date().toISOString()
+          }
+        ])
+        return
+      }
+      
       const query = supabase?.from('testimonials')
       if (query) {
         const { data, error } = await query
@@ -49,28 +81,10 @@ export function TestimonialManagement() {
 
         if (error) {
           console.error('Error loading testimonials:', error)
-          // Fallback to sample data
-          setTestimonials([
-            {
-              id: '1',
-              name: 'Rajesh Kumar',
-              trip_title: 'Nandi Hills Adventure',
-              rating: 5,
-              content: 'Amazing experience! The sunrise view was breathtaking and the trek was well organized.',
-              created_at: new Date().toISOString()
-            },
-            {
-              id: '2',
-              name: 'Priya Sharma',
-              trip_title: 'Skandagiri Night Trek',
-              rating: 4,
-              content: 'Great adventure under the stars. Well planned trip with experienced guides.',
-              created_at: new Date().toISOString()
-            }
-          ])
           return
         }
 
+        console.log('Loaded testimonials from database:', data)
         setTestimonials(data || [])
       }
     } catch (error) {
@@ -81,34 +95,76 @@ export function TestimonialManagement() {
   const handleSave = async () => {
     setIsLoading(true)
     try {
-      if (editingId) {
-        // Update existing testimonial
-        const updateQuery = supabase?.from('testimonials')
-        if (updateQuery) {
-          const { error } = await updateQuery
-            .update({ ...formData, updated_at: new Date().toISOString() })
-            .eq('id', editingId)
-
-          if (error) throw error
-        }
-      } else {
-        // Create new testimonial
-        const insertQuery = supabase?.from('testimonials')
-        if (insertQuery) {
-          const { error } = await insertQuery
-            .insert([{ ...formData, created_at: new Date().toISOString(), updated_at: new Date().toISOString() }])
-
-          if (error) throw error
-        }
+      console.log('HandleSave called, isDemoMode:', isDemoMode)
+      
+      // Validate required fields
+      if (!formData.name.trim()) {
+        alert('Please enter a name')
+        return
+      }
+      if (!formData.comment.trim()) {
+        alert('Please enter testimonial content')
+        return
+      }
+      
+      // In demo mode, show success message and return early
+      if (isDemoMode) {
+        console.log('Demo mode: Testimonial save operation simulated')
+        alert('Demo mode: Testimonial saved successfully! (This is a simulation - no real data was saved)')
+        setIsEditing(false)
+        setEditingId(null)
+        setFormData(initialFormData)
+        return
       }
 
+      console.log('Attempting to save testimonial data:', formData)
+
+      if (editingId) {
+        // Update existing testimonial
+        console.log('Updating testimonial with ID:', editingId)
+        const updateQuery = supabase?.from('testimonials')
+        if (updateQuery) {
+          const result = await updateQuery
+            .update(formData)
+            .eq('id', editingId)
+
+          console.log('Update result:', result)
+          if (result.error) throw result.error
+        }
+      } else {
+        // Create new testimonial      console.log('Creating new testimonial')
+      console.log('Form data being sent:', formData)
+      console.log('Form data keys:', Object.keys(formData))
+      
+      const insertQuery = supabase?.from('testimonials')
+      if (insertQuery) {
+        const dataToInsert = { 
+          ...formData, 
+          id: crypto.randomUUID(), 
+          created_at: new Date().toISOString() 
+        }
+        console.log('Data to insert:', dataToInsert)
+        console.log('Data to insert keys:', Object.keys(dataToInsert))
+        
+        const result = await insertQuery.insert([dataToInsert])
+
+        console.log('Insert result:', result)
+        if (result.error) {
+          console.error('Insert error details:', result.error)
+          throw result.error
+        }
+      }
+      }
+
+      alert('Testimonial saved successfully!')
       setIsEditing(false)
       setEditingId(null)
       setFormData(initialFormData)
       loadTestimonials()
     } catch (error) {
       console.error('Error saving testimonial:', error)
-      alert('Error saving testimonial. Please try again.')
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
+      alert(`Error saving testimonial: ${errorMessage}. Please try again.`)
     } finally {
       setIsLoading(false)
     }
@@ -119,7 +175,8 @@ export function TestimonialManagement() {
       name: testimonial.name,
       trip_title: testimonial.trip_title,
       rating: testimonial.rating,
-      content: testimonial.content
+      comment: testimonial.comment,
+      image: testimonial.image || ''
     })
     setEditingId(testimonial.id)
     setIsEditing(true)
@@ -243,8 +300,8 @@ export function TestimonialManagement() {
               <Label htmlFor="content">Testimonial Content *</Label>
               <Textarea
                 id="content"
-                value={formData.content}
-                onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
+                value={formData.comment}
+                onChange={(e) => setFormData(prev => ({ ...prev, comment: e.target.value }))}
                 placeholder="Customer feedback and experience"
                 rows={4}
               />
@@ -277,7 +334,14 @@ export function TestimonialManagement() {
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-        {testimonials.map((testimonial) => (
+        {testimonials.length === 0 ? (
+          <Card className="col-span-full">
+            <CardContent className="text-center py-8">
+              <p className="text-gray-500">No testimonials found. Add some testimonials to see them here.</p>
+            </CardContent>
+          </Card>
+        ) : (
+          testimonials.map((testimonial) => (
           <Card key={testimonial.id} className="shadow-lg hover:shadow-xl transition-shadow">
             <CardHeader className="pb-3">
               <div className="flex justify-between items-start">
@@ -309,14 +373,15 @@ export function TestimonialManagement() {
                 {testimonial.trip_title}
               </Badge>
               <p className="text-sm text-gray-600 leading-relaxed line-clamp-4">
-                "{testimonial.content}"
+                "{testimonial.comment}"
               </p>
               <div className="mt-3 pt-3 border-t text-xs text-gray-500">
                 Added: {new Date(testimonial.created_at).toLocaleDateString()}
               </div>
             </CardContent>
           </Card>
-        ))}
+          ))
+        )}
       </div>
 
       {testimonials.length === 0 && (

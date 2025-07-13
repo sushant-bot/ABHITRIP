@@ -299,7 +299,7 @@ export function TripDetailPage({ trip }: TripDetailPageProps) {
                 {(() => {
                   // Group itinerary items by day
                   const groupedByDay = trip.itinerary.reduce((acc, item, index) => {
-                    const dayNumber = item.day || (Math.floor(index / Math.ceil(trip.itinerary.length / (trip.category === 'two-day' ? 2 : 1))) + 1);
+                    const dayNumber = item.day ?? (Math.floor(index / Math.ceil(trip.itinerary.length / (trip.category === 'two-day' ? 2 : 1))) + 1);
                     if (!acc[dayNumber]) {
                       acc[dayNumber] = [];
                     }

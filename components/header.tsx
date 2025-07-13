@@ -4,14 +4,11 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Menu, X, ChevronDown, Instagram, MessageCircle, Sparkles, LogIn } from "lucide-react"
-import { useAuth } from "@/components/auth/auth-provider"
-import { UserProfile } from "@/components/auth/user-profile"
+import { Menu, X, ChevronDown, Instagram, MessageCircle, Sparkles } from "lucide-react"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const { user } = useAuth()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,29 +17,6 @@ export function Header() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
-
-  const AuthButton = () => {
-    if (user) {
-      return <UserProfile />
-    }
-
-    return (
-      <Link href="/auth/login">
-        <Button 
-          variant="outline" 
-          size="sm"
-          className={`transition-all duration-300 ${
-            isScrolled 
-              ? "border-blue-200 text-blue-600 hover:bg-blue-50" 
-              : "border-white/30 text-white hover:bg-white/10"
-          }`}
-        >
-          <LogIn className="w-4 h-4 mr-2" />
-          Sign In
-        </Button>
-      </Link>
-    )
-  }
 
   return (
     <header
@@ -179,9 +153,6 @@ export function Header() {
               <MessageCircle className="w-4 h-4 text-white" />
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-green-400 to-emerald-400 opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-300"></div>
             </Link>
-            
-            {/* Authentication */}
-            <AuthButton />
           </div>
 
           {/* Enhanced Mobile Menu Button */}

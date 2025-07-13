@@ -10,13 +10,6 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-  
-  /* Custom responsive classes for admin panel mobile optimization */
-  @media (min-width: 480px) {
-    .xs\:inline {
-      display: inline;
-    }
-  }
 }
 
 @layer base {

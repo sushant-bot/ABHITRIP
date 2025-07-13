@@ -1,4 +1,4 @@
-import { supabase } from './supabase-client'
+import { supabase, DbTrip } from './supabase-client'
 
 export interface Trip {
   id: number
@@ -41,6 +41,11 @@ export interface Trip {
 // Database functions that fetch from Supabase
 export async function getAllTripsFromDB(): Promise<Trip[]> {
   try {
+    if (!supabase) {
+      console.log('Supabase not configured, using fallback data')
+      return getFallbackTrips()
+    }
+
     const { data, error } = await supabase
       .from('trips')
       .select('*')
@@ -60,6 +65,11 @@ export async function getAllTripsFromDB(): Promise<Trip[]> {
 
 export async function getOneDayTripsFromDB(): Promise<Trip[]> {
   try {
+    if (!supabase) {
+      console.log('Supabase not configured, using fallback data')
+      return getOneDayTrips()
+    }
+
     const { data, error } = await supabase
       .from('trips')
       .select('*')
@@ -80,6 +90,11 @@ export async function getOneDayTripsFromDB(): Promise<Trip[]> {
 
 export async function getTwoDayTripsFromDB(): Promise<Trip[]> {
   try {
+    if (!supabase) {
+      console.log('Supabase not configured, using fallback data')
+      return getTwoDayTrips()
+    }
+
     const { data, error } = await supabase
       .from('trips')
       .select('*')
@@ -100,15 +115,39 @@ export async function getTwoDayTripsFromDB(): Promise<Trip[]> {
 
 export async function getTripBySlugFromDB(slug: string): Promise<Trip | null> {
   try {
-    const { data, error } = await supabase
+    if (!supabase) {
+      console.log('Supabase not configured, using fallback data')
+      return getTripBySlug(slug) || null
+    }
+
+    // First try to find by slug column
+    let { data, error } = await supabase
       .from('trips')
       .select('*')
-      .eq('title', slug.replace(/-/g, ' '))
+      .eq('slug', slug)
       .limit(1)
     
-    if (error || !data || data.length === 0) {
+    // If slug column doesn't exist (error is empty object), try by title
+    if (error && Object.keys(error).length === 0) {
+      console.log('Slug column might not exist, trying title-based lookup for:', slug)
+      const titleQuery = await supabase
+        .from('trips')
+        .select('*')
+        .eq('title', slug.replace(/-/g, ' '))
+        .limit(1)
+      
+      data = titleQuery.data
+      error = titleQuery.error
+    }
+    
+    if (error && Object.keys(error).length > 0) {
       console.error('Error fetching trip by slug:', error)
       return getTripBySlug(slug) || null // Fallback to static data
+    }
+    
+    if (!data || data.length === 0) {
+      // No trip found in database, try fallback
+      return getTripBySlug(slug) || null
     }
     
     return transformDBToTrip(data[0])
@@ -119,7 +158,7 @@ export async function getTripBySlugFromDB(slug: string): Promise<Trip | null> {
 }
 
 // Transform database row to Trip interface
-function transformDBToTrip(dbTrip: any): Trip {
+function transformDBToTrip(dbTrip: DbTrip): Trip {
   return {
     id: parseInt(dbTrip.id) || Math.floor(Math.random() * 1000000),
     title: dbTrip.title,
@@ -135,7 +174,7 @@ function transformDBToTrip(dbTrip: any): Trip {
     groupSize: dbTrip.group_size,
     rating: dbTrip.rating || 4.5,
     reviews: dbTrip.reviews || 0,
-    slug: createSlug(dbTrip.title),
+    slug: dbTrip.slug || createSlug(dbTrip.title),
     highlights: dbTrip.highlights || [],
     itinerary: dbTrip.itinerary || [],
     pickupPoints: dbTrip.pickup_points || [],
@@ -1456,7 +1495,7 @@ export const allTrips: Trip[] = [
     category: "two-day",
     is_featured: false,
     itinerary: [
-      { time: "Day 0 – 08:00 PM", activity: "Begin Your Scenic Journey to the Kudremukh Trek" },
+      { time: "Day 0", activity: "Begin Your Scenic Journey to the Kudremukh Trek" },
       { time: "08:00 PM", activity: "Start from Banashankari bus stop" },
       { time: "08:15 PM", activity: "Join from BTM Layout" },
       { time: "08:30 PM", activity: "Next stop, Silk Board" },
@@ -1794,4 +1833,85 @@ export function getOneDayTrips(): Trip[] {
 
 export function getTwoDayTrips(): Trip[] {
   return allTrips.filter((trip) => trip.category === "two-day")
+}
+
+// Utility function to add slug column and migrate existing data
+// Call this once after adding the slug column to your Supabase table
+export async function migrateTripsWithSlugs(): Promise<void> {
+  try {
+    if (!supabase) {
+      console.log('Supabase not configured, cannot migrate')
+      return
+    }
+
+    console.log('Starting trip slug migration...')
+
+    // First, try to get all trips to check if slug column exists
+    const { data: allTrips, error: fetchError } = await supabase
+      .from('trips')
+      .select('*')
+
+    if (fetchError) {
+      console.error('Error fetching trips:', fetchError)
+      throw new Error(`Database error: ${JSON.stringify(fetchError)}`)
+    }
+
+    if (!allTrips || allTrips.length === 0) {
+      console.log('No trips found in database')
+      return
+    }
+
+    console.log(`Found ${allTrips.length} total trips in database`)
+
+    // Check if slug column exists by looking at the first trip
+    const firstTrip = allTrips[0]
+    if (!firstTrip.hasOwnProperty('slug')) {
+      throw new Error('Slug column does not exist in trips table. Please add the slug column first using the instructions above.')
+    }
+
+    // Get trips that need slug migration (null, empty, or undefined slug)
+    const tripsNeedingMigration = allTrips.filter(trip => 
+      !trip.slug || trip.slug.trim() === ''
+    )
+
+    if (tripsNeedingMigration.length === 0) {
+      console.log('All trips already have slugs. No migration needed.')
+      return
+    }
+
+    console.log(`Found ${tripsNeedingMigration.length} trips that need slug migration`)
+
+    // Update each trip with a generated slug
+    let successCount = 0
+    let errorCount = 0
+
+    for (const trip of tripsNeedingMigration) {
+      const slug = createSlug(trip.title)
+      
+      console.log(`Updating trip "${trip.title}" with slug: ${slug}`)
+      
+      const { error: updateError } = await supabase
+        .from('trips')
+        .update({ slug })
+        .eq('id', trip.id)
+
+      if (updateError) {
+        console.error(`Error updating trip ${trip.id} with slug:`, updateError)
+        errorCount++
+      } else {
+        console.log(`✓ Successfully updated trip "${trip.title}" with slug: ${slug}`)
+        successCount++
+      }
+    }
+
+    console.log(`Migration completed! Success: ${successCount}, Errors: ${errorCount}`)
+    
+    if (errorCount > 0) {
+      throw new Error(`Migration completed with ${errorCount} errors. Check console for details.`)
+    }
+
+  } catch (error) {
+    console.error('Migration error:', error)
+    throw error
+  }
 }

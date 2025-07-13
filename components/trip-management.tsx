@@ -16,6 +16,7 @@ import Image from "next/image"
 
 interface TripFormData {
   title: string
+  slug: string
   description: string
   detailed_description: string
   location: string
@@ -45,6 +46,7 @@ interface TripFormData {
 
 const initialFormData: TripFormData = {
   title: '',
+  slug: '',
   description: '',
   detailed_description: '',
   location: '',
@@ -255,6 +257,10 @@ export function TripManagement() {
       const fileName = `trip-${Date.now()}.${fileExt}`
       const filePath = `trips/${fileName}`
 
+      if (!supabase) {
+        throw new Error('Supabase client not available')
+      }
+
       const { error: uploadError } = await supabase.storage
         .from('trip-images')
         .upload(filePath, file)
@@ -363,8 +369,18 @@ export function TripManagement() {
         imageUrl = await handleImageUpload()
       }
 
+      // Generate slug from title
+      const generateSlug = (title: string): string => {
+        return title
+          .toLowerCase()
+          .replace(/[^a-z0-9\s-]/g, '')
+          .replace(/\s+/g, '-')
+          .trim()
+      }
+
       const tripData = {
         ...formData,
+        slug: generateSlug(formData.title),
         image: imageUrl,
         highlights: formData.highlights.filter(h => h.trim()),
         pickup_points: formData.pickup_points.filter(p => p.trim()),
@@ -420,6 +436,7 @@ export function TripManagement() {
   const handleEdit = (trip: DbTrip) => {
     setFormData({
       title: trip.title,
+      slug: trip.slug || '',
       description: trip.description,
       detailed_description: trip.detailed_description,
       location: trip.location,
@@ -434,8 +451,8 @@ export function TripManagement() {
       image: trip.image,
       highlights: Array.isArray(trip.highlights) ? trip.highlights : [trip.highlights].filter(Boolean),
       pickup_points: Array.isArray(trip.pickup_points) 
-        ? trip.pickup_points.map(p => 
-            typeof p === 'string' ? p : `${(p as any).location} - ${(p as any).time}`
+        ? trip.pickup_points.map((p: string | { location: string; time: string }) => 
+            typeof p === 'string' ? p : `${p.location} - ${p.time}`
           ) 
         : [],
       included: Array.isArray(trip.included) ? trip.included : [],
@@ -443,7 +460,7 @@ export function TripManagement() {
       things_to_carry: Array.isArray(trip.things_to_carry) ? trip.things_to_carry : [],
       cancellation_policy: trip.cancellation_policy,
       is_featured: trip.is_featured || false,
-      itinerary: Array.isArray(trip.itinerary) ? trip.itinerary : [{ day: 1, time: '', title: '', activity: '' }]
+      itinerary: Array.isArray(trip.itinerary) ? trip.itinerary : [{ day: 0, time: '', title: '', activity: '' }]
     })
     setEditingId(trip.id)
     setIsEditing(true)
@@ -499,7 +516,7 @@ export function TripManagement() {
 
   // Itinerary management functions
   const addItineraryItem = () => {
-    const currentDays = formData.itinerary.map(item => item.day || 1);
+    const currentDays = formData.itinerary.map(item => item.day ?? 1);
     const maxDay = formData.category === 'two-day' ? 2 : 1;
     
     // Start with Day 0 if no items exist, otherwise add next available day

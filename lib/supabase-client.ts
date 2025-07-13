@@ -1,15 +1,10 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
-
-// Types for our database tables
+// Database Types
 export interface DbTrip {
   id: string
-  title: string
   slug: string
+  title: string
   description: string
   detailed_description: string
   location: string
@@ -23,13 +18,22 @@ export interface DbTrip {
   category: 'one-day' | 'two-day'
   image: string
   highlights: string[]
-  itinerary: any[]
   pickup_points: string[]
   included: string[]
   excluded: string[]
   things_to_carry: string[]
   cancellation_policy: string
   is_featured: boolean
+  faqs: Array<{
+    question: string
+    answer: string
+  }>
+  itinerary: Array<{
+    day?: number
+    time?: string
+    title?: string
+    activity?: string
+  }>
   created_at: string
   updated_at: string
 }
@@ -38,22 +42,30 @@ export interface DbTestimonial {
   id: string
   name: string
   trip_title: string
-  content: string
   rating: number
+  comment: string
+  image: string
   created_at: string
 }
 
 export interface DbBooking {
   id: string
   trip_id: string
-  user_name: string
-  user_email: string
-  user_phone: string
-  travelers: number
-  travel_date: string
-  special_requests?: string
-  total_amount: number
-  booking_status: 'pending' | 'confirmed' | 'cancelled'
+  name: string
+  email: string
+  phone: string
+  pickup_location: string
+  participants: number
   created_at: string
   updated_at: string
 }
+
+// Create Supabase client
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+export const supabase = supabaseUrl && supabaseKey 
+  ? createClient(supabaseUrl, supabaseKey)
+  : null
+
+export default supabase
