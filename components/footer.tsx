@@ -176,18 +176,7 @@ export function Footer() {
           <p className="flex items-center justify-center gap-2">
             <span>&copy; {new Date().getFullYear()} Abhi Trip. All rights reserved.</span>
             <span className="px-2">•</span>
-            <span>
-              Developed by{" "}
-              <a
-                href="https://NextureX.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative inline-block group hover:text-white transition-colors duration-300"
-              >
-                <span className="relative z-10">NextureX</span>
-                <span className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-25 blur-lg transition-opacity duration-300 rounded"></span>
-              </a>
-            </span>
+           
           </p>
         </div>
       </div>
